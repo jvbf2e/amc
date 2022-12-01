@@ -1,0 +1,81 @@
+{
+  "$schema": "../node_modules/@tauri-apps/cli/schema.json",
+  "build": {
+    "distDir": "../dist",
+    "devPath": "http://localhost:5173/",
+    "beforeDevCommand": "yarn run web:dev",
+    "beforeBuildCommand": "yarn run web:build"
+  },
+  "package": {
+    "productName": "qucent-amc",
+    "version": "0.1.40"
+  },
+  "tauri": {
+    "allowlist": {
+      "all": true
+    },
+    "bundle": {
+      "active": true,
+      "targets": "all",
+      "identifier": "cn.qucent.amc",
+      "icon": [
+        "icons/32x32.png",
+        "icons/128x128.png",
+        "icons/128x128@2x.png",
+        "icons/icon.icns",
+        "icons/icon.ico"
+      ],
+      "resources": [],
+      "copyright": "© 2022 qucent.cn All Rights Reserved",
+      "category": "DeveloperTool",
+      "shortDescription": "",
+      "longDescription": "",
+      "externalBin": [],
+      "deb": {
+        "depends": []
+      },
+      "macOS": {
+        "frameworks": [],
+        "minimumSystemVersion": "",
+        "exceptionDomain": "",
+        "signingIdentity": null,
+        "entitlements": null
+      },
+      "windows": {
+        "certificateThumbprint": null,
+        "digestAlgorithm": "sha256",
+        "timestampUrl": "",
+        "wix": {
+          "language": ["zh-CN", "en-US"]
+        }
+      }
+    },
+    "security": {
+      "csp": "script-src 'unsafe-eval' 'self'; default-src blob: data: filesystem: ws: wss: http: https: tauri: 'unsafe-eval' 'unsafe-inline' 'self'; img-src data: 'self';"
+    },
+    "systemTray": {
+      "iconPath": "icons/icon.png",
+      "iconAsTemplate": true
+    },
+    "updater": {
+      "active": true,
+      "dialog": false,
+      "endpoints": ["https://api.amccs.qucent.cn/web/version/update.json"],
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDhCMTkxOTUxOTIyNEQwMzQKUldRMDBDU1NVUmtaaTlKNU1tTURJZlZONFZmZFdFRU9NWE5aR1hxUGp1U291NStMN1ZkcVUzVE4K"
+    },
+    "windows": [
+      {
+        "label": "spin",
+        "url": "/spin",
+        "center": true,
+        "width": 480,
+        "height": 240,
+        "resizable": true,
+        "title": "加载 - AMC圈讯科技",
+        "fullscreen": false,
+        "transparent": true,
+        "decorations": false
+      }
+    ]
+  }
+}

@@ -1,0 +1,11 @@
+html,
+body {
+  margin: 0;
+  width: var(--vw);
+  height: var(--vh);
+}
+
+#app {
+  width: var(--vw);
+  height: var(--vh);
+}

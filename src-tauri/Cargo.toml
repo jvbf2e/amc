@@ -1,0 +1,67 @@
+[package]
+name = "amc"
+version = "0.1.34"
+description = "A Tauri App"
+authors = ["you"]
+license = ""
+repository = ""
+default-run = "amc"
+edition = "2021"
+rust-version = "1.57"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[build-dependencies]
+tauri-build = { version = "1.0.4", features = [] }
+
+[dependencies]
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+serde_yaml = "0.9"
+tauri = { version = "1.2.1", features = ["api-all", "icon-ico", "icon-png", "system-tray", "updater"] }
+tauri-plugin-autostart = {git = "https://github.com/tauri-apps/tauri-plugin-autostart"}
+tauri-plugin-websocket = {git = "https://github.com/tauri-apps/tauri-plugin-websocket"}
+anyhow = "1.0"
+parking_lot = "0.12"
+delay_timer = "0.11"
+auto-launch = "0.4"
+tokio = { version = "1.22", features = ["net"] }
+tokio-tungstenite = "0.18"
+chrono = "0.4.23"
+log = "0.4.17"
+log4rs = "1.2.0"
+nanoid = "0.4.0"
+dunce = "1.0.3"
+warp = "0.3"
+once_cell = "1.16.0"
+which = "4.3.0"
+dirs = "4.0.0"
+open = "3.2.0"
+port_scanner = "0.1.5"
+reqwest = { version = "0.11.11", features = ["stream"] }
+futures-util = "0.3"
+async-recursion = "1.0.0"
+zip = "0.6.2"
+downloader = "0.2.6"
+tiny_http = "0.11"
+lazy_static = "1.4.0"
+window-vibrancy = "0.1"
+window-shadows= "0.1"
+
+[target."cfg(target_os = \"windows\")".dependencies]
+runas = "0.2.1"
+deelevate = "0.2.0"
+winreg = { version = "0.10", features = ["transactions"] }
+windows-sys = { version = "0.42", features = ["Win32_System_LibraryLoader", "Win32_System_SystemInformation"] }
+
+[features]
+default = [ "custom-protocol" ]
+custom-protocol = [ "tauri/custom-protocol" ]
+amc-dev = []
+default-meta = []
+
+[profile.release]
+panic = "abort"
+codegen-units = 1
+lto = true
+opt-level = "s"

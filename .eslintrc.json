@@ -1,0 +1,4 @@
+{
+  "root": true,
+  "extends": ["@shell-design/eslint-config"]
+}

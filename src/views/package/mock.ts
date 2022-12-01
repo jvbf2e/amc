@@ -1,0 +1,55 @@
+export const listTableData = [{
+  code: '001',
+  name: '蓝象上海有限公司',
+  time: '2022-03-12',
+  type: '流动资金',
+  address: '上海',
+  username: '海滨',
+  number: 2,
+  sell: '蓝象上海有限公司'
+}, {
+  code: '002',
+  name: '宁波万达商铺有限公司',
+  time: '2022-03-12',
+  type: '固定资产',
+  address: '上海',
+  username: '成都',
+  number: 2,
+  sell: '宁波万达商铺有限公司'
+}, {
+  code: '003',
+  name: '上海市建筑机械厂',
+  time: '2022-03-12',
+  type: '长期投资',
+  address: '江苏',
+  username: '海滨',
+  number: 2,
+  sell: '上海市建筑机械厂'
+}, {
+  code: '004',
+  name: '万达科技',
+  time: '2022-03-12',
+  type: '无形资产',
+  address: '北京',
+  username: '海滨',
+  number: 2,
+  sell: '万达科技'
+}, {
+  code: '005',
+  name: '上海圈讯有限公司',
+  time: '2022-03-12',
+  type: '长期投资',
+  address: '上海',
+  username: '海滨',
+  number: 2,
+  sell: '上海圈讯有限公司'
+}, {
+  code: '006',
+  name: '上海中正出口有限公司',
+  time: '2022-03-12',
+  type: '长期投资',
+  address: '上海',
+  username: '海滨',
+  number: 2,
+  sell: '上海中正出口有限公司'
+}]
