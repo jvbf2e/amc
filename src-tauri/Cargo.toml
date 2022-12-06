@@ -18,7 +18,6 @@ tauri-build = { version = "1.0.4", features = [] }
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 serde_yaml = "0.9"
-serde_db = "0.11"
 tauri = { version = "1.2.1", features = ["api-all", "icon-ico", "icon-png", "system-tray", "updater"] }
 tauri-runtime-wry = "0.12"
 tauri-plugin-autostart = {git = "https://github.com/tauri-apps/tauri-plugin-autostart"}
