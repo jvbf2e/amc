@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { piniaPersistConfig } from '@/utils'
 
-import type { GlobalState, ThemeConfigProp } from '../interface'
+import type { GlobalState, QucentConfig, ThemeConfigProp } from '../interface'
 
 // defineStore 调用后返回一个函数，调用该函数获得 Store 实体
 export const GlobalStore = defineStore({
@@ -18,6 +18,7 @@ export const GlobalStore = defineStore({
     assemblySize: 'default',
     // language
     language: 'zh',
+    themeColor: 'darkblue',
     // themeConfig
     themeConfig: {
       // 默认 primary 主题颜色
@@ -26,10 +27,40 @@ export const GlobalStore = defineStore({
       isDark: false,
     },
     autoStart: 0,
+    config: {
+      ask_before_download: false,
+      enable_auto_launch: false,
+      enable_auto_update: false,
+      file_save_location: null,
+      language: 'en',
+      theme_mode: 'system',
+    },
+    theme_system: true,
   }),
   getters: {
     getAutoStart: (state) => {
       return state.autoStart
+    },
+    getThemeColor: (state) => {
+      return state.themeColor
+    },
+    getConfig: (state) => {
+      return state.config
+    },
+    getLanguage: (state) => {
+      return state.config.language
+    },
+    getConfigAutoLaunch: (state) => {
+      return state.config.enable_auto_launch
+    },
+    getAutoUpdate: (state) => {
+      return state.config.enable_auto_update
+    },
+    getThemeMode: (state) => {
+      return state.config.theme_mode
+    },
+    getThemeSystem: (state) => {
+      return state.theme_system
     },
   },
   actions: {
@@ -37,8 +68,20 @@ export const GlobalStore = defineStore({
     async setToken(token: string) {
       this.token = token
     },
+    // setConfig
+    setConfig(config: QucentConfig) {
+      this.config = config
+      this.theme_system = config.theme_mode === 'system'
+    },
+    // setConfigAutoLaunch
+    setConfigAutoLaunch(value: boolean) {
+      this.config.enable_auto_launch = value
+    },
     setSign(value: boolean) {
       this.sign = value
+    },
+    setThemeColor(value: string) {
+      this.themeColor = value
     },
     // setAutoStart
     setAutoStart(value: boolean) {

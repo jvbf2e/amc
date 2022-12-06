@@ -24,6 +24,18 @@
     </a-form-item>
     <a-form-item field="permission_ids" label="菜单权限">
       <div class="form-tree">
+        <!-- <a-tree
+          :default-checked-keys="props.model?.permission_ids"
+          :checkable="true"
+          v-model:checked-keys="FormData.form.model.permission_ids"
+          :data="(allMenuTree as any[])"
+          :fieldNames="{
+            key: 'id',
+            title: 'name',
+            children: 'children',
+            icon: 'customIcon',
+          }"
+        /> -->
         <CTree
           v-model:checked-keys="FormData.form.model.permission_ids"
           :data="allMenuTree"

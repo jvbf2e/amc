@@ -15,7 +15,7 @@
     <a-form-item field="role_list" label="角色">
       <template v-if="FormData.model.is_admin === 2">
         <a-checkbox-group v-model="FormData.model.role_list">
-          <template v-for="item in roleStore.all">
+          <template v-for="item in roleStore.getAll">
             <a-checkbox :value="item.id">{{ item.name }}</a-checkbox>
           </template>
         </a-checkbox-group>

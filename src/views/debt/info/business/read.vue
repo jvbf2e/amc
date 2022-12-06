@@ -99,7 +99,6 @@ const WebData = reactive({
   loading: false,
   ...Config,
   handleOpen: async (data: any) => {
-    console.log(route)
     const { name, row } = data
     const type = name === '裁判文书' ? 'cpws' : 'ktgg'
     ModalData.title = name

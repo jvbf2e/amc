@@ -3,66 +3,45 @@
   windows_subsystem = "windows"
 )]
 
-mod config;
-mod core;
-mod utils;
-mod commands;
-mod feat;
+pub mod config;
+pub mod core;
+pub mod utils;
+pub mod command;
+pub mod feat;
 
-use crate::utils::{init, resolve, server};
-use tauri::{api, SystemTray};
+use crate::utils::{init, resolve};
+use crate::core::{tray};
 use tauri_plugin_websocket::TauriWebsocket;
 
-// Register the command:
-fn main() -> std::io::Result<()> {
-  // 单例检测
-  if server::check_singleton().is_err() {
-    println!("app 存在");
-    return Ok(());
-  }
+#[macro_use]
+extern crate lazy_static;
 
+lazy_static! {
+  static ref IS_MAIN: bool = true;
+}
+
+/// Register the command:
+fn main() {
+  // 初始化配置
   crate::log_err!(init::init_config());
 
+  let context = tauri::generate_context!();
+
   #[allow(unused_mut)]
-  let mut builder = tauri::Builder::default()
-    .system_tray(SystemTray::new())
+  let mut _builder = tauri::Builder::default()
+    .system_tray(tray::menu())
     .setup(|app| Ok(resolve::resolve_setup(app)))
-    .on_system_tray_event(core::tray::Tray::on_system_tray_event)
+    .on_system_tray_event(tray::handler)
     .plugin(TauriWebsocket::default())
     .invoke_handler(tauri::generate_handler![
-        // common
-        commands::download_video
-    ]);
-
-  let context = tauri::generate_context!();
-  let app = builder.build(context).expect("error while running tauri application");
-
-  app.run(|app_handle, e| match e {
-    tauri::RunEvent::ExitRequested { api, .. } => {
-      api.prevent_exit();
-    }
-    tauri::RunEvent::Exit => {
-      api::process::kill_children();
-      app_handle.exit(0);
-    }
-    #[cfg(target_os = "macos")]
-    tauri::RunEvent::WindowEvent { label, event, .. } => {
-      use tauri::Manager;
-
-      if label == "main" {
-        match event {
-          tauri::WindowEvent::CloseRequested { api, .. } => {
-            api.prevent_close();
-            app_handle.get_window("main").map(|win| {
-              let _ = win.hide();
-            });
-          }
-          _ => {}
-        }
-      }
-    }
-    _ => {}
-  });
-
-  Ok(())
+      command::download_video,
+      // amc
+      command::get_amc_config,
+      command::patch_amc_config,
+      // qucent
+      command::get_qucent_config,
+      command::patch_qucent_config,
+    ])
+    .run(context)
+    .expect("failed to run app");
 }

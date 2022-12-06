@@ -1,61 +1,40 @@
-use crate::{
-  config::Config,
-  feat,
-  utils::resolve
-};
-use anyhow::Result;
-use tauri::{
-  api, AppHandle, CustomMenuItem, Manager, SystemTrayEvent, SystemTrayMenu, SystemTrayMenuItem,
-  SystemTraySubmenu,
-};
+use tauri::AppHandle;
+use tauri::Manager;
+use tauri::{SystemTray, SystemTrayMenu, CustomMenuItem, SystemTrayEvent};
 
-pub struct Tray {}
+// 托盘菜单
+pub fn menu() -> SystemTray {
+  let tray_menu = SystemTrayMenu::new()
+    .add_item(CustomMenuItem::new("show".to_string(), "打开AMC"))
+    .add_item(CustomMenuItem::new("hide".to_string(), "隐藏AMC"))
+    .add_item(CustomMenuItem::new("quit".to_string(), "退出AMC"));
 
-impl Tray {
-  pub fn tray_menu(app_handle: &AppHandle) -> SystemTrayMenu {
-    let zh = { Config::amc().latest().language == Some("zh".into()) };
+  // 设置在右键单击系统托盘时显示菜单
+  SystemTray::new().with_menu(tray_menu)
+}
 
-    let version = app_handle.package_info().version.to_string();
-
-    if zh {
-      SystemTrayMenu::new()
-        .add_item(
-          CustomMenuItem::new("app_version", format!("Version {version}")).disabled(),
-        )
-        .add_native_item(SystemTrayMenuItem::Separator)
-        .add_item(CustomMenuItem::new("show", "打开AMC"))
-        .add_item(CustomMenuItem::new("quit", "退出").accelerator("CmdOrControl+Q"))
-    } else {
-      SystemTrayMenu::new()
-        .add_item(
-          CustomMenuItem::new("app_version", format!("Version {version}")).disabled(),
-        )
-        .add_native_item(SystemTrayMenuItem::Separator)
-        .add_item(CustomMenuItem::new("show", "Dashboard"))
-        .add_item(CustomMenuItem::new("quit", "Quit").accelerator("CmdOrControl+Q"))
-    }
-  }
-
-  pub fn update_systray(app_handle: &AppHandle) -> Result<()> {
-    app_handle
-      .tray_handle()
-      .set_menu(Tray::tray_menu(app_handle))?;
-    Ok(())
-  }
-
-  pub fn on_system_tray_event(app_handle: &AppHandle, event: SystemTrayEvent) {
-    match event {
-      SystemTrayEvent::MenuItemClick { id, .. } => match id.as_str() {
-        "show" => resolve::create_window(app_handle),
+// 菜单事件
+pub fn handler(app: &AppHandle, event: SystemTrayEvent) {
+  // 匹配点击事件
+  match event {
+    // 根据菜单 id 进行事件匹配
+    SystemTrayEvent::MenuItemClick { id, .. } => {
+      match id.as_str() {
         "quit" => {
-          resolve::resolve_reset();
-          api::process::kill_children();
-          app_handle.exit(0);
           std::process::exit(0);
+        }
+        "show" => {
+          let window = app.get_window("main").unwrap();
+          if window.is_visible().unwrap() {
+            window.unminimize().unwrap();
+            window.set_focus().unwrap();
+          } else {
+            window.show().unwrap();
+          }
         }
         _ => {}
       }
-      _ => {}
     }
+    _ => {}
   }
 }

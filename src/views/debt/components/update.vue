@@ -23,7 +23,7 @@
         </a-form-item>
       </a-col>
       <a-col :span="12">
-        <a-form-item field="asset_package_id" label="所属资产包">
+        <a-form-item field="asset_package_id" label="所属项目">
           <a-select
             v-model="FormData.model.asset_package_id"
             placeholder="请选择所属资产包"
@@ -32,6 +32,7 @@
               <a-option
                 :value="item.asset_package_id"
                 :label="item.project_name"
+                :disabled="!!packageId"
               />
             </template>
           </a-select>
@@ -69,32 +70,48 @@
       </a-col>
       <a-col :span="12">
         <a-form-item field="loan_contract_amount" label="借款合同金额">
-          <a-input-number
-            v-model="FormData.model.loan_contract_amount"
-            placeholder="请输入"
-            :precision="2"
-            allow-clear
-            hide-button
+          <a-tooltip
+            :content="simplifyNum(FormData.model.loan_contract_amount)"
+            position="tl"
+            mini
           >
-            <template #suffix>
-              <span>元</span>
-            </template>
-          </a-input-number>
+            <a-input-number
+              v-model="FormData.model.loan_contract_amount"
+              placeholder="请输入借款合同金额"
+              :precision="2"
+              allow-clear
+              hide-button
+              :max="10000000000000"
+              model-event="input"
+            >
+              <template #suffix>
+                <span>元</span>
+              </template>
+            </a-input-number>
+          </a-tooltip>
         </a-form-item>
       </a-col>
       <a-col :span="12">
         <a-form-item field="iou_amount" label="借据金额">
-          <a-input-number
-            v-model="FormData.model.iou_amount"
-            placeholder="请输入"
-            :precision="2"
-            allow-clear
-            hide-button
+          <a-tooltip
+            :content="simplifyNum(FormData.model.iou_amount)"
+            position="tl"
+            mini
           >
-            <template #suffix>
-              <span>元</span>
-            </template>
-          </a-input-number>
+            <a-input-number
+              v-model="FormData.model.iou_amount"
+              placeholder="请输入借据金额"
+              :precision="2"
+              allow-clear
+              hide-button
+              :max="10000000000000"
+              model-event="input"
+            >
+              <template #suffix>
+                <span>元</span>
+              </template>
+            </a-input-number>
+          </a-tooltip>
         </a-form-item>
       </a-col>
       <a-col :span="12">
@@ -107,47 +124,67 @@
       </a-col>
       <a-col :span="12">
         <a-form-item field="debt_principal_balance" label="债权本金余额">
-          <a-input-number
-            v-model="FormData.model.debt_principal_balance"
-            placeholder="请输入"
-            :precision="2"
-            allow-clear
-            hide-button
+          <a-tooltip
+            :content="simplifyNum(FormData.model.debt_principal_balance)"
+            position="tl"
+            mini
           >
-            <template #suffix>
-              <span>元</span>
-            </template>
-          </a-input-number>
+            <a-input-number
+              v-model="FormData.model.debt_principal_balance"
+              placeholder="请输入债权本金余额"
+              :precision="2"
+              allow-clear
+              hide-button
+              :max="10000000000000"
+              model-event="input"
+              @change="WebData.handleChange"
+            >
+              <template #suffix>
+                <span>元</span>
+              </template>
+            </a-input-number>
+          </a-tooltip>
         </a-form-item>
       </a-col>
       <a-col :span="12">
         <a-form-item field="interest_penalty_amount" label="利、罚息数额">
-          <a-input-number
-            v-model="FormData.model.interest_penalty_amount"
-            placeholder="请输入"
-            :precision="2"
-            allow-clear
-            hide-button
+          <a-tooltip
+            :content="simplifyNum(FormData.model.interest_penalty_amount)"
+            position="tl"
+            mini
           >
-            <template #suffix>
-              <span>元</span>
-            </template>
-          </a-input-number>
+            <a-input-number
+              v-model="FormData.model.interest_penalty_amount"
+              placeholder="请输入利、罚息数额"
+              :precision="2"
+              allow-clear
+              hide-button
+              :max="10000000000000"
+              model-event="input"
+              @change="WebData.handleChange2"
+            >
+              <template #suffix>
+                <span>元</span>
+              </template>
+            </a-input-number>
+          </a-tooltip>
         </a-form-item>
       </a-col>
       <a-col :span="12">
-        <a-form-item field="principal_interest_amount" label="本息合计">
-          <a-input-number
-            v-model="FormData.model.principal_interest_amount"
-            placeholder="请输入"
-            :precision="2"
-            allow-clear
-            hide-button
+        <a-form-item field="principal_interest_amount" label="本息合计(元)">
+          <a-tooltip
+            :content="simplifyNum(FormData.model.principal_interest_amount)"
+            position="tl"
+            mini
           >
-            <template #suffix>
-              <span>元</span>
-            </template>
-          </a-input-number>
+            <a-input-number
+              v-model="FormData.model.principal_interest_amount"
+              placeholder="本息合计 = 债权本金余额 + 利、罚息数额"
+              :precision="2"
+              read-only
+            >
+            </a-input-number>
+          </a-tooltip>
         </a-form-item>
       </a-col>
       <a-col :span="12">
@@ -163,7 +200,7 @@
         <a-form-item field="loan_term_rate" label="借款期利率">
           <a-input-number
             v-model="FormData.model.loan_term_rate"
-            placeholder="请输入"
+            placeholder="请输入借款期利率"
             :precision="2"
             allow-clear
             hide-button
@@ -178,7 +215,7 @@
         <a-form-item field="interest_pause_date" label="利息暂计日期">
           <a-date-picker
             v-model="FormData.model.interest_pause_date"
-            placeholder="请选择利息暂计日期"
+            placeholder="请输入利息暂计日期"
             style="width: 100%"
           />
         </a-form-item>
@@ -196,7 +233,7 @@
         <a-form-item field="penalty_interest_rate" label="罚息/违约金利率">
           <a-input-number
             v-model="FormData.model.penalty_interest_rate"
-            placeholder="请输入"
+            placeholder="请输入罚息/违约金利率"
             :precision="2"
             allow-clear
             hide-button
@@ -209,31 +246,25 @@
       </a-col>
       <a-col :span="12">
         <a-form-item field="debt_transfer_price" label="本债权转让金额">
-          <a-input-number
-            v-model="FormData.model.debt_transfer_price"
-            placeholder="请输入"
-            :precision="2"
-            allow-clear
-            hide-button
+          <a-tooltip
+            :content="simplifyNum(FormData.model.debt_transfer_price)"
+            position="tl"
+            mini
           >
-            <template #suffix>
-              <span>元</span>
-            </template>
-          </a-input-number>
-        </a-form-item>
-      </a-col>
-      <a-col :span="12">
-        <a-form-item field="project_level" label="项目等级">
-          <a-select
-            v-model="FormData.model.project_level"
-            placeholder="请选择项目等级"
-          >
-            <template
-              v-for="item in appStore.dicts.filter((item: any) => item.key === 'project_level')[0].children"
+            <a-input-number
+              v-model="FormData.model.debt_transfer_price"
+              placeholder="请输入本债权转让金额"
+              :precision="2"
+              allow-clear
+              hide-button
+              :max="10000000000000"
+              model-event="input"
             >
-              <a-option :value="parseInt(item.key)" :label="item.value" />
-            </template>
-          </a-select>
+              <template #suffix>
+                <span>元</span>
+              </template>
+            </a-input-number>
+          </a-tooltip>
         </a-form-item>
       </a-col>
     </a-row>
@@ -245,6 +276,7 @@ import lodash from 'lodash'
 import { onMounted, reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { getDebtPackageList } from '@/api/modules'
+import { simplifyNum } from '@/utils'
 import { AppStore, DebtStore } from '@/store'
 
 import type { PropType } from 'vue'
@@ -285,6 +317,14 @@ const Apis = reactive({
 
 const WebData = reactive({
   packageList: [] as { asset_package_id: number; project_name: string }[],
+  handleChange: (value: any) => {
+    FormData.model.principal_interest_amount =
+      (FormData.model.interest_penalty_amount ?? 0) + value
+  },
+  handleChange2: (value: any) => {
+    FormData.model.principal_interest_amount =
+      (FormData.model.debt_principal_balance ?? 0) + value
+  },
   push: () => {
     router.push({ name: 'DebtList' })
   },

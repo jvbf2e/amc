@@ -1,4 +1,4 @@
-use super::{IQucentTemp, IRuntime, IAmc};
+use super::{IAmc, IQucent};
 use parking_lot::{MappedMutexGuard, Mutex, MutexGuard};
 use std::sync::Arc;
 
@@ -64,63 +64,5 @@ macro_rules! draft_define {
   };
 }
 
-// draft_define!(IQucent);
-draft_define!(IQucentTemp);
-draft_define!(IRuntime);
 draft_define!(IAmc);
-
-#[test]
-fn test_draft() {
-  let amc = IAmc {
-    enable_auto_launch: Some(true),
-    enable_tun_mode: Some(false),
-    ..IAmc::default()
-  };
-
-  let draft = Draft::from(amc);
-
-  assert_eq!(draft.data().enable_auto_launch, Some(true));
-  assert_eq!(draft.data().enable_tun_mode, Some(false));
-
-  assert_eq!(draft.draft().enable_auto_launch, Some(true));
-  assert_eq!(draft.draft().enable_tun_mode, Some(false));
-
-  let mut d = draft.draft();
-  d.enable_auto_launch = Some(false);
-  d.enable_tun_mode = Some(true);
-  drop(d);
-
-  assert_eq!(draft.data().enable_auto_launch, Some(true));
-  assert_eq!(draft.data().enable_tun_mode, Some(false));
-
-  assert_eq!(draft.draft().enable_auto_launch, Some(false));
-  assert_eq!(draft.draft().enable_tun_mode, Some(true));
-
-  assert_eq!(draft.latest().enable_auto_launch, Some(false));
-  assert_eq!(draft.latest().enable_tun_mode, Some(true));
-
-  assert!(draft.apply().is_some());
-  assert!(draft.apply().is_none());
-
-  assert_eq!(draft.data().enable_auto_launch, Some(false));
-  assert_eq!(draft.data().enable_tun_mode, Some(true));
-
-  assert_eq!(draft.draft().enable_auto_launch, Some(false));
-  assert_eq!(draft.draft().enable_tun_mode, Some(true));
-
-  let mut d = draft.draft();
-  d.enable_auto_launch = Some(true);
-  drop(d);
-
-  assert_eq!(draft.data().enable_auto_launch, Some(false));
-
-  assert_eq!(draft.draft().enable_auto_launch, Some(true));
-
-  assert!(draft.discard().is_some());
-
-  assert_eq!(draft.data().enable_auto_launch, Some(false));
-
-  assert!(draft.discard().is_none());
-
-  assert_eq!(draft.draft().enable_auto_launch, Some(false));
-}
+draft_define!(IQucent);

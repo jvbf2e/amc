@@ -14,10 +14,11 @@
 </template>
 
 <script setup lang="ts">
-import { reactive } from 'vue'
-import { useRouter } from 'vue-router'
+import { reactive, watchEffect } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import { AppStore } from '@/store'
 
+const route = useRoute()
 const router = useRouter()
 const appStore = AppStore()
 
@@ -62,26 +63,24 @@ const MenuData = reactive({
     }
 
     .arco-icon {
+      color: rgb(195, 200, 210);
       transition: all 0.1s cubic-bezier(0, 0, 1, 1);
     }
 
     .name {
       display: inline-block;
       margin: 4px 0;
+      color: rgb(195, 200, 210);
       transition: all 0.1s cubic-bezier(0, 0, 1, 1);
     }
 
     &:hover,
     &.active {
       .arco-icon {
-        color: rgb(var(--blue-6));
+        color: rgb(51, 112, 255);
       }
 
-      .name {
-        color: var(--color-fill-1);
-      }
-
-      background-color: rgba(0, 0, 0, 0.2);
+      background-color: rgba(0, 0, 0, 0.4);
     }
   }
 }

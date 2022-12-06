@@ -1,6 +1,6 @@
 <template>
   <div class="enterprise-info">
-    <a-tabs v-model="WebData.active">
+    <a-tabs v-model="WebData.active" lazy-load>
       <template v-for="item in WebData.list" :key="item.key">
         <a-tab-pane :title="item.title">
           <component :is="item.component" :key="item.key"></component>

@@ -7,9 +7,10 @@
       />
     </a-form-item>
     <a-form-item field="submit_time" label="变更申请人申请书提交时间">
-      <a-input
+      <a-date-picker
         v-model="FormData.model.submit_time"
-        placeholder="请输入变更申请人申请书提交时间"
+        placeholder="请选择变更申请人申请书提交时间"
+        style="width: 100%"
       />
     </a-form-item>
     <a-form-item field="task_list" label="变更申请人待完成事务">
@@ -19,9 +20,10 @@
       />
     </a-form-item>
     <a-form-item field="ruling_time" label="变更申请人裁定做出时间">
-      <a-input
+      <a-date-picker
         v-model="FormData.model.ruling_time"
-        placeholder="请输入变更申请人裁定做出时间"
+        placeholder="请选择变更申请人裁定做出时间"
+        style="width: 100%"
       />
     </a-form-item>
     <a-form-item field="desc" label="备注">

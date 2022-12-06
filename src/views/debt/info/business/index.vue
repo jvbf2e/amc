@@ -62,7 +62,7 @@ import ReadPage from './read.vue'
 
 const appStore = AppStore()
 
-const { params } = useRoute()
+const { query } = useRoute()
 
 const Apis = reactive({
   create: async () => {
@@ -71,7 +71,7 @@ const Apis = reactive({
         code,
         data: res,
         msg,
-      } = await createDebtBusiness(parseInt(params.asset_debt_id as string))
+      } = await createDebtBusiness(parseInt(query.asset_debt_id as string))
       if (code === 0) {
         WebData.status = res.status
         WebData.params = res.params
@@ -89,7 +89,7 @@ const Apis = reactive({
         code,
         data: res,
         msg,
-      } = await readDebtBusiness(parseInt(params.asset_debt_id as string))
+      } = await readDebtBusiness(parseInt(query.asset_debt_id as string))
       if (code === 0) {
         WebData.status = res.status
         WebData.params = res.params
@@ -153,7 +153,7 @@ onMounted(async () => {
 
         .arco-icon {
           padding: 4px;
-          color: #fff;
+          color: var(--color-white);
           background-image: linear-gradient(135deg, #52b0fe 10%, #1769fc 100%);
           border-radius: 4px;
         }

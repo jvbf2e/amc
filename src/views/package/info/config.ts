@@ -32,6 +32,7 @@ export default {
       {
         title: '债权编号',
         dataIndex: 'debt_no',
+        slotName: 'debt_no',
         width: 120,
         ellipsis: true,
         tooltip: true,
@@ -40,7 +41,6 @@ export default {
       {
         title: '借款合同编号',
         dataIndex: 'contract_no',
-        slotName: 'contract_no',
         width: 120,
         ellipsis: true,
         tooltip: true,

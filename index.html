@@ -10,5 +10,26 @@
     <div id="app"></div>
     <script type="module" src="/src/main.ts"></script>
     <script src="http://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js"></script>
+    <script type="text/javascript">
+      function getSystem() {
+        const ua = navigator.userAgent
+        if (ua.includes('Mac OS X')) return 'macos'
+        if (/win64|win32/i.test(ua)) return 'windows'
+        if (/linux/i.test(ua)) return 'linux'
+        return 'unknown'
+      }
+      const OS = getSystem()
+      window.document.oncontextmenu = function (e) {
+        // only prevent it on Windows
+        if (OS === 'windows') e.preventDefault()
+      }
+      window.addEventListener('keydown', (e) => {
+        if (e.keyCode >= 112 && e.keyCode <= 123) {
+          e.returnValue = false
+        } else if (e.keyCode >= 37 && e.keyCode <= 40) {
+          e.returnValue = false
+        }
+      })
+    </script>
   </body>
 </html>

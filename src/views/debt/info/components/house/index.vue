@@ -33,22 +33,27 @@
       {{ getDict('produce_status', record.produce_status) }}
     </template>
     <template #enquiry_price="{ record }">
-      <template v-if="record.enquiry_mode === 2 && record.enquiry_date === 0">
-        <a-link href="javascript:;" :hoverable="false">去评估</a-link>
-      </template>
-      <template v-else>
-        {{ record.enquiry_price }}
-      </template>
+      <a-link
+        href="javascript:;"
+        :hoverable="false"
+        @click="ModalData.handleVisible(record, 'house')"
+      >
+        {{ record.enquiry_price === 0 ? '去评估' : record.enquiry_price }}
+      </a-link>
     </template>
     <template #enquiry_date="{ record }">
-      {{ record.enquiry_date === 0 ? '--' : record.enquiry_date }}
+      {{
+        record.enquiry_date === 0
+          ? '--'
+          : moment(record.enquiry_date * 1000).format('YYYY-MM-DD')
+      }}
     </template>
     <template #options="{ record }">
       <a-space :size="12">
         <a-link
           href="javascript:;"
           :hoverable="false"
-          @click="ModalData.handleVisible(record.id)"
+          @click="ModalData.handleVisible(record, 'produce')"
         >
           产调
         </a-link>
@@ -100,17 +105,31 @@
     :visible="ModalData.visible"
     :width="ModalData.width"
     title-align="start"
-    unmount-on-close
     :footer="false"
     @ok="ModalData.handleOk"
     @cancel="ModalData.handleCancel"
+    unmount-on-close
   >
-    <ProducePage :id="ModalData.id" />
+    <template v-if="ModalData.type === 'produce'">
+      <ProducePage :id="ModalData.house.id" />
+    </template>
+    <template v-else-if="ModalData.type === 'house'">
+      <HousePage
+        ref="housePageRef"
+        :id="ModalData.house.id"
+        :debt-id="ModalData.house.asset_debt_id"
+        @handle-submit="Apis.getList"
+      />
+    </template>
+    <template v-else>
+      <a-empty />
+    </template>
   </a-modal>
 </template>
 
 <script setup lang="ts">
 import { onMounted, reactive, ref } from 'vue'
+import moment from 'moment'
 import { getDebtHouseInfo, getDebtHouseList } from '@/api/modules'
 import { AppStore, DebtStore } from '@/store'
 import { getDict } from '@/utils'
@@ -119,6 +138,7 @@ import type { Debt } from '@/api/interface'
 import type { CrudType } from './type'
 
 import CreatePage from './create.vue'
+import HousePage from '@/views/data/house/index.vue'
 import UpdatePage from './update.vue'
 import ProducePage from './produce.vue'
 
@@ -137,6 +157,7 @@ const props = defineProps({
 
 const createPageRef = ref()
 const updatePageRef = ref()
+const housePageRef = ref()
 
 const appStore = AppStore()
 const debtStore = DebtStore()
@@ -162,6 +183,12 @@ const Apis = reactive({
       } else {
         throw msg
       }
+    } catch (error) {
+      appStore.setMessage({ content: error as string, type: 'danger' })
+    }
+  },
+  getDataHouse: async () => {
+    try {
     } catch (error) {
       appStore.setMessage({ content: error as string, type: 'danger' })
     }
@@ -229,14 +256,31 @@ const DrawerData = reactive({
 const ModalData = reactive({
   title: '产调',
   visible: false,
-  width: 610,
-  id: 0,
+  width: 680,
+  house: {
+    id: 0,
+    asset_debt_id: 0,
+  },
+  type: 'produce' as 'produce' | 'house',
   handleOk: () => {},
   handleCancel: () => {
+    housePageRef.value.handleReset()
     ModalData.visible = false
   },
-  handleVisible: (id: number) => {
-    ModalData.id = id
+  handleVisible: (row: any, type: 'produce' | 'house') => {
+    switch (type) {
+      case 'produce':
+        ModalData.title = '产调详情'
+        ModalData.house.id = row.id
+        break
+      case 'house':
+        ModalData.title = '房产评估'
+        ModalData.house.id = row.id
+        ModalData.house.asset_debt_id = row.asset_debt_id
+      default:
+        break
+    }
+    ModalData.type = type
     ModalData.visible = true
   },
 })

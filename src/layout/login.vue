@@ -96,7 +96,7 @@ onMounted(() => {
     width: 460px;
     display: flex;
     flex-direction: column;
-    background-color: #fff;
+    background-color: var(--color-bg-1);
     border-radius: 18px 0 0 18px;
     z-index: 999;
   }

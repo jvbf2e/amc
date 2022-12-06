@@ -25,7 +25,7 @@
     </a-form-item>
     <a-form-item field="role_list" label="角色">
       <a-checkbox-group v-model="FormData.form.model.role_list">
-        <template v-for="item in roleStore.all">
+        <template v-for="item in roleStore.getAll">
           <a-checkbox :value="item.id">{{ item.name }}</a-checkbox>
         </template>
       </a-checkbox-group>

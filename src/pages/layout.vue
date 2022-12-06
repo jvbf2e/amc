@@ -44,7 +44,7 @@ import cacheRouter from '@/router/cacheRouter'
 
   &-header {
     height: 50px;
-    background-color: #fff;
+    background-color: var(--color-bg-1);
     box-shadow: 2px 0 8px 0 rgb(29 35 41 / 5%);
     z-index: 999;
   }

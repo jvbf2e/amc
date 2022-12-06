@@ -1,81 +1,86 @@
 <template>
   <div class="enterprise-info no-padding">
-    <div class="enterprise-info__card">
-      <h3 class="enterprise-info__card-title">基础信息</h3>
-      <div class="enterprise-info__card-body">
-        <a-row>
-          <a-col :span="12">
-            <div class="info">
-              <a-image :src="enterpriseStore.info.logo_url.url" :height="60" />
-              <b class="info-name">
-                {{ enterpriseStore.info.enterprise_name }}
-              </b>
-              <div class="info-extend">
-                <b>当前版本</b>
-                <br />
-                <span class="type">{{
-                  enterpriseStore.info.version_type
-                }}</span>
+    <a-space :size="24" direction="vertical" fill>
+      <div class="enterprise-info__card">
+        <h3 class="enterprise-info__card-title">基础信息</h3>
+        <div class="enterprise-info__card-body">
+          <a-row>
+            <a-col :span="12">
+              <div class="info">
+                <a-image
+                  :src="enterpriseStore.info.logo_url.url"
+                  :height="60"
+                />
+                <b class="info-name">
+                  {{ enterpriseStore.info.enterprise_name }}
+                </b>
+                <div class="info-extend">
+                  <b>当前版本</b>
+                  <br />
+                  <span class="type">{{
+                    enterpriseStore.info.version_type
+                  }}</span>
+                </div>
               </div>
-            </div>
-          </a-col>
-          <a-col :span="12">
-            <div class="list">
-              <div class="list-item">
-                <span class="suffix">账户数量</span>
-                <a-progress
-                  :percent="
-                    enterpriseStore.info.use_number /
-                    enterpriseStore.info.accounts_number
-                  "
-                  size="large"
-                  color="#00b42a"
-                  :animation="true"
-                >
-                  <template v-slot:text="scope">
-                    {{
-                      `${enterpriseStore.info.use_number}/${enterpriseStore.info.accounts_number}`
-                    }}
-                  </template>
-                </a-progress>
+            </a-col>
+            <a-col :span="12">
+              <div class="list">
+                <div class="list-item">
+                  <span class="suffix">账户数量</span>
+                  <a-progress
+                    :percent="
+                      enterpriseStore.info.use_number /
+                      enterpriseStore.info.accounts_number
+                    "
+                    size="large"
+                    color="#00b42a"
+                    :animation="true"
+                  >
+                    <template v-slot:text="scope">
+                      {{
+                        `${enterpriseStore.info.use_number}/${enterpriseStore.info.accounts_number}`
+                      }}
+                    </template>
+                  </a-progress>
+                </div>
+                <div class="list-item">
+                  <span class="suffix">剩余天数</span>
+                  <a-progress
+                    :percent="compCurrentDay / compTotalDay"
+                    size="large"
+                    color="#00b42a"
+                    :animation="true"
+                  >
+                    <template v-slot:text="scope">
+                      {{ `${compCurrentDay}/${compTotalDay}` }}
+                    </template>
+                  </a-progress>
+                </div>
               </div>
-              <div class="list-item">
-                <span class="suffix">剩余天数</span>
-                <a-progress
-                  :percent="compCurrentDay / compTotalDay"
-                  size="large"
-                  color="#00b42a"
-                  :animation="true"
-                >
-                  <template v-slot:text="scope">
-                    {{ `${compCurrentDay}/${compTotalDay}` }}
-                  </template>
-                </a-progress>
-              </div>
-            </div>
-          </a-col>
-        </a-row>
+            </a-col>
+          </a-row>
+        </div>
       </div>
-    </div>
-    <div class="enterprise-info__card">
-      <h3 class="enterprise-info__card-title">活跃成员</h3>
-      <div class="enterprise-info__card-body">
-        <a-row>
-          <a-col :span="6">
-            <div align="center">
-              <p>昨日活跃人数</p>
-              <p>{{ enterpriseStore.info.yesterday_online_number }}人</p>
-            </div>
-          </a-col>
-          <a-col :span="6">
-            <div align="center">
-              <p>今日活跃人数</p>
-              <p>{{ enterpriseStore.info.today_online_number }}人</p>
-            </div>
-          </a-col>
-        </a-row>
+      <div class="enterprise-info__card">
+        <h3 class="enterprise-info__card-title">活跃成员</h3>
+        <div class="enterprise-info__card-body">
+          <a-row>
+            <a-col :span="6">
+              <div align="center">
+                <p>昨日活跃人数</p>
+                <p>{{ enterpriseStore.info.yesterday_online_number }}人</p>
+              </div>
+            </a-col>
+            <a-col :span="6">
+              <div align="center">
+                <p>今日活跃人数</p>
+                <p>{{ enterpriseStore.info.today_online_number }}人</p>
+              </div>
+            </a-col>
+          </a-row>
+        </div>
       </div>
-    </div>
+    </a-space>
   </div>
 </template>
 
@@ -110,22 +115,39 @@ onMounted(async () => {
     padding: 0;
   }
 
-  &__card {
-    position: relative;
+  .version {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    color: rgb(var(--primary-6));
+    background-color: var(--color-primary-light-1);
+    border: 1px solid var(--color-primary-light-2);
+    border-radius: 6px;
 
-    & + & {
-      margin-top: 24px;
-      padding-top: 24px;
-      border-top: 1px dashed var(--color-border-2);
+    & > .msg {
+      color: var(--color-text-3);
+      font-size: 12px;
     }
+  }
+
+  &__card {
+    padding: 18px 12px;
+    background-color: var(--color-bg-1);
+    border: 1px solid var(--color-border-2);
+    border-radius: 6px;
 
     &-title {
-      color: #333;
-      font-size: 14px;
+      margin: 0;
+      color: rgb(var(--gray-10));
+      text-indent: 0.4em;
+      border-left: 4px solid rgb(var(--primary-6));
     }
 
     &-body {
-      padding: 24px;
+      padding: 24px 0 12px;
+      color: rgb(var(--gray-10));
 
       .info {
         position: relative;
@@ -133,6 +155,7 @@ onMounted(async () => {
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        color: rgb(var(--gray-10));
 
         & > * + * {
           margin-top: 24px;
@@ -142,7 +165,6 @@ onMounted(async () => {
           text-align: center;
 
           & > b {
-            color: #333;
             font-size: 16px;
           }
 
@@ -162,6 +184,7 @@ onMounted(async () => {
           display: flex;
           flex-direction: row;
           justify-content: space-evenly;
+          color: rgb(var(--gray-10));
 
           & + .list-item {
             margin-top: 24px;

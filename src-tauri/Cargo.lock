@@ -95,6 +95,7 @@ dependencies = [
  "tauri-build",
  "tauri-plugin-autostart",
  "tauri-plugin-websocket",
+ "tauri-runtime-wry",
  "tiny_http",
  "tokio",
  "tokio-tungstenite 0.18.0",

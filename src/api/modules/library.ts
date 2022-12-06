@@ -99,8 +99,11 @@ export const uploadLibraryFile = (data: Library.ReqFileCreateParams) => {
   formData.set('group_id', `${data.group_id}`)
   formData.set('file', data.file)
   formData.set('source_type', `${data.source_type}`)
-  if (data.asset_package_id) {
+  if (data.asset_package_id !== 0) {
     formData.set('asset_package_id', `${data.asset_package_id}`)
+  }
+  if (data.asset_debt_id !== 0) {
+    formData.set('asset_debt_id', `${data.asset_debt_id}`)
   }
   formData.set('string', stamp.string)
   formData.set('stamp', `${stamp.stamp}`)

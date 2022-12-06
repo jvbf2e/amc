@@ -8,7 +8,6 @@ use tauri_runtime_wry::wry::application::accelerator::Accelerator;
 
 pub struct Hotkey {
   current: Arc<Mutex<Vec<String>>>, // 保存当前的热键设置
-
   app_handle: Arc<Mutex<Option<AppHandle>>>,
 }
 
@@ -52,10 +51,9 @@ impl Hotkey {
 
   /// 检查一个键是否合法
   fn check_key(hotkey: &str) -> Result<()> {
-    // fix #287
     // tauri的这几个方法全部有Result expect，会panic，先检测一遍避免挂了
     if hotkey.parse::<Accelerator>().is_err() {
-      bail!("invalid hotkey `{hotkey}`");
+      bail!("无效热键 `{hotkey}`");
     }
     Ok(())
   }
@@ -63,11 +61,12 @@ impl Hotkey {
   fn get_manager(&self) -> Result<impl GlobalShortcutManager> {
     let app_handle = self.app_handle.lock();
     if app_handle.is_none() {
-      bail!("failed to get the hotkey manager");
+      bail!("无法获取热键管理器");
     }
     Ok(app_handle.as_ref().unwrap().global_shortcut_manager())
   }
 
+  /// 注册一个
   fn register(&self, hotkey: &str, func: &str) -> Result<()> {
     let mut manager = self.get_manager()?;
 
@@ -76,17 +75,25 @@ impl Hotkey {
     }
 
     let f = match func.trim() {
-      _ => bail!("invalid function \"{func}\""),
+      "all_hotkey" => || feat::all_hotkey(),
+      "maximize" => || feat::maximize(),
+      "setting" => || feat::setting(),
+
+      "amc_show_hide" => || feat::amc_show_hide(),
+
+      _ => bail!("无效函数 \"{func}\""),
     };
 
     manager.register(hotkey, f)?;
-    log::info!(target: "app", "register hotkey {hotkey} {func}");
+
+    log::info!(target: "app", "注册热键 {hotkey} {func}");
+
     Ok(())
   }
 
   fn unregister(&self, hotkey: &str) -> Result<()> {
     self.get_manager()?.unregister(&hotkey)?;
-    log::info!(target: "app", "unregister hotkey {hotkey}");
+    log::info!(target: "app", "注销热键 {hotkey}");
     Ok(())
   }
 
@@ -111,6 +118,7 @@ impl Hotkey {
     });
 
     *current = new_hotkeys;
+
     Ok(())
   }
 
@@ -123,11 +131,12 @@ impl Hotkey {
       let key = iter.next();
 
       if func.is_some() && key.is_some() {
-        let func = func.unwrap().trim();
-        let key = key.unwrap().trim();
-        map.insert(key, func);
+          let func = func.unwrap().trim();
+          let key = key.unwrap().trim();
+          map.insert(key, func);
       }
     });
+
     map
   }
 

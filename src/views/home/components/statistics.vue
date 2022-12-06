@@ -64,7 +64,7 @@ onMounted(async () => {
 .c-card {
   position: relative;
   width: 100%;
-  background-color: #fff;
+  background-color: var(--color-bg-1);
   border-radius: 4px;
   overflow: hidden;
 
@@ -107,7 +107,7 @@ onMounted(async () => {
 
     &-count {
       display: block;
-      color: #333;
+      color: rgb(var(--gray-10));
       font-size: 18px;
     }
 

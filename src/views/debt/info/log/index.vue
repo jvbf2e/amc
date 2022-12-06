@@ -64,14 +64,14 @@
       <template v-if="DrawerData.type === 'create'">
         <CreatePage
           ref="createPageRef"
-          :debt-id="parseInt(params.asset_debt_id as string)"
+          :debt-id="parseInt(query.asset_debt_id as string)"
           @submit-success="DrawerData.handleForm"
         />
       </template>
       <template v-else-if="DrawerData.type === 'update'">
         <UpdatePage
           ref="updatePageRef"
-          :debt-id="parseInt(params.asset_debt_id as string)"
+          :debt-id="parseInt(query.asset_debt_id as string)"
           :model="WebData.info"
           @submit-success="DrawerData.handleForm"
         />
@@ -102,7 +102,7 @@ import { FILE_URL } from '@/config/config'
 const appStore = AppStore()
 const debtStore = DebtStore()
 
-const { params } = useRoute()
+const { query } = useRoute()
 
 const createPageRef = ref()
 const updatePageRef = ref()
@@ -134,9 +134,7 @@ const TableData = reactive({
         asset_debt_id: row.asset_debt_id,
         follow_ids: [row.follow_id],
       })
-      await debtStore.apiDebtLogGetList(
-        parseInt(params.asset_debt_id as string)
-      )
+      await debtStore.apiDebtLogGetList(parseInt(query.asset_debt_id as string))
     } catch (error) {
       appStore.setMessage({ content: error as string, type: 'danger' })
     }
@@ -204,13 +202,13 @@ const DrawerData = reactive({
     DrawerData.visible = false
   },
   handleForm: async () => {
-    await debtStore.apiDebtLogGetList(parseInt(params.asset_debt_id as string))
+    await debtStore.apiDebtLogGetList(parseInt(query.asset_debt_id as string))
     DrawerData.handleCancel()
   },
 })
 
 onMounted(async () => {
-  await debtStore.apiDebtLogGetList(parseInt(params.asset_debt_id as string))
+  await debtStore.apiDebtLogGetList(parseInt(query.asset_debt_id as string))
 })
 </script>
 

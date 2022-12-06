@@ -1,7 +1,11 @@
 <template>
-  <div class="layout-bg"></div>
+  <div :class="['layout-bg', globalStore.getThemeColor]" />
   <div class="layout-sider">
-    <Header class="header-wrapper" title="圈讯AMC平台" :show-max="true" />
+    <Header
+      class="header-wrapper"
+      :title="appStore.info.ent_name"
+      :show-max="true"
+    />
     <Menu class="sider-wrapper" />
   </div>
   <div class="layout-body">
@@ -32,7 +36,7 @@
 <script setup lang="ts">
 import { onMounted, reactive, watchEffect } from 'vue'
 import { useRoute } from 'vue-router'
-import { AppStore } from '@/store'
+import { AppStore, GlobalStore } from '@/store'
 
 import cacheRouter from '@/router/cacheRouter'
 import Header from '@/components/header/index.vue'
@@ -44,6 +48,7 @@ import Aside from '@/components/aside/index.vue'
 const route = useRoute()
 
 const appStore = AppStore()
+const globalStore = GlobalStore()
 
 const AsideData = reactive({
   title: '',
@@ -86,8 +91,31 @@ onMounted(() => {
   &-bg {
     width: var(--vw);
     height: var(--vh);
-    background-color: #262f3e;
     z-index: 9;
+
+    &.darkblue {
+      background: linear-gradient(
+        to top left,
+        rgb(42, 53, 81) 50%,
+        rgb(56, 73, 105)
+      );
+    }
+
+    &.blue {
+      background: linear-gradient(
+        to top left,
+        rgb(74, 118, 223) 50%,
+        rgb(64, 122, 226)
+      );
+    }
+
+    &.gray {
+      background: linear-gradient(
+        to top left,
+        rgb(235, 236, 243) 50%,
+        rgb(241, 239, 241)
+      );
+    }
   }
 
   &-sider {
@@ -100,7 +128,7 @@ onMounted(() => {
     flex-flow: row nowrap;
     width: calc(var(--vw) - 64px);
     height: calc(var(--vh) - 44px);
-    background-color: #fff;
+    background-color: var(--color-bg-1);
     border-radius: 12px 0 0 0;
     overflow: hidden;
     transform: translate(64px, 44px);

@@ -60,14 +60,14 @@
       <template v-if="DrawerData.type === 'create'">
         <CreatePage
           ref="createPageRef"
-          :debt-id="parseInt(params.asset_debt_id as string)"
+          :debt-id="parseInt(query.asset_debt_id as string)"
           @submit-success="DrawerData.handleForm"
         />
       </template>
       <template v-else-if="DrawerData.type === 'update'">
         <UpdatePage
           ref="updatePageRef"
-          :debt-id="parseInt(params.asset_debt_id as string)"
+          :debt-id="parseInt(query.asset_debt_id as string)"
           :model="WebData.info"
           @submit-success="DrawerData.handleForm"
         />
@@ -94,7 +94,7 @@ import type { CrudType } from './type'
 const appStore = AppStore()
 const debtStore = DebtStore()
 
-const { params } = useRoute()
+const { query } = useRoute()
 
 const createPageRef = ref()
 const updatePageRef = ref()
@@ -127,7 +127,7 @@ const TableData = reactive({
         collection_ids: [row.collection_id],
       })
       await debtStore.apiDebtReturnGetList(
-        parseInt(params.asset_debt_id as string)
+        parseInt(query.asset_debt_id as string)
       )
     } catch (error) {
       appStore.setMessage({ content: error as string, type: 'danger' })
@@ -180,14 +180,14 @@ const DrawerData = reactive({
   },
   handleForm: async () => {
     await debtStore.apiDebtReturnGetList(
-      parseInt(params.asset_debt_id as string)
+      parseInt(query.asset_debt_id as string)
     )
     DrawerData.handleCancel()
   },
 })
 
 onMounted(async () => {
-  await debtStore.apiDebtReturnGetList(parseInt(params.asset_debt_id as string))
+  await debtStore.apiDebtReturnGetList(parseInt(query.asset_debt_id as string))
 })
 </script>
 

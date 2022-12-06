@@ -5,19 +5,19 @@ use serde::{Deserialize, Serialize};
 /// ### `amc.yaml` schema
 #[derive(Default, Debug, Clone, Deserialize, Serialize)]
 pub struct IAmc {
-  /// 应用单例的应用监听端口
-  pub app_singleton_port: Option<u16>,
+  /// 主题色：`darkblue` or `blue` or `gray`
+  pub theme_color: Option<String>,
 
-  // i18n
+  // 国际化
   pub language: Option<String>,
 
-  /// `light` or `dark` or `system`
+  /// 主题：`light` or `dark` or `system`
   pub theme_mode: Option<String>,
 
-  /// can the app auto startup
+  /// 自动启动
   pub enable_auto_launch: Option<bool>,
 
-  /// hotkey map
+  /// 快捷键
   /// format: {func},{key}
   pub hotkeys: Option<Vec<String>>,
 }
@@ -45,16 +45,27 @@ impl IAmc {
     }
   }
 
-  /// 在初始化前尝试拿到单例端口的值
-  pub fn get_singleton_port() -> u16 {
-    #[cfg(not(feature = "amc-dev"))]
-    const SERVER_PORT: u16 = 33331;
-    #[cfg(feature = "amc-dev")]
-    const SERVER_PORT: u16 = 11233;
+  /// Save IAmc App Config
+  pub fn save_file(&self) -> Result<()> {
+    help::save_yaml(&dirs::amc_path()?, &self, Some("# Qucent Amc Config"))
+  }
 
-    match dirs::amc_path().and_then(|path| help::read_yaml::<IAmc>(&path)) {
-      Ok(config) => config.app_singleton_port.unwrap_or(SERVER_PORT),
-      Err(_) => SERVER_PORT, // 这里就不log错误了
+  /// patch amc config
+  /// only save to file
+  pub fn patch_config(&mut self, patch: IAmc) {
+    macro_rules! patch {
+      ($key: tt) => {
+        if patch.$key.is_some() {
+          self.$key = patch.$key;
+        }
+      };
     }
+
+    patch!(language);
+    patch!(theme_mode);
+
+    patch!(enable_auto_launch);
+
+    patch!(hotkeys);
   }
 }

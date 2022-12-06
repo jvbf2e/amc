@@ -233,6 +233,7 @@ const WebData = reactive({
   handleFast: async () => {
     try {
       await debtStore.apiDebtLawsuitsFast(props.assetDebtId)
+      await Apis.getList()
     } catch (error) {
       appStore.setMessage({ content: error as string, type: 'danger' })
     }

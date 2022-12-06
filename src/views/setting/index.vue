@@ -84,7 +84,8 @@ import {
   IconUpload,
   IconUser,
 } from '@arco-design/web-vue/es/icon'
-import CContainer from './components/container.vue'
+
+import CContainer from './container.vue'
 
 const router = useRouter()
 
@@ -98,7 +99,7 @@ const WebData = reactive({
 <style lang="less" scoped>
 .setting {
   position: relative;
-  height: 100%;
+  height: calc(var(--vh) - 44px);
 
   &-header {
     display: flex;
@@ -106,9 +107,11 @@ const WebData = reactive({
     justify-content: space-between;
     padding: 0 24px;
     height: 54px;
+    color: rgb(var(--gray-10));
     line-height: 54px;
     background-color: var(--color-neutral-2);
     border-bottom: 1px solid var(--color-border-3);
+
     .title {
       font-size: 18px;
     }
@@ -125,10 +128,9 @@ const WebData = reactive({
   }
 
   &-body {
-    flex: 1;
     display: flex;
     flex-direction: row;
-    height: calc(100% - 54px);
+    height: calc(100% - 55px);
   }
 
   &-sider {
@@ -142,7 +144,7 @@ const WebData = reactive({
       .arco-anchor-link-item {
         & :deep(.arco-anchor-link) {
           padding: 12px 24px;
-          color: #333;
+          color: rgb(var(--gray-10));
           font-size: 14px;
           border-radius: 8px;
 

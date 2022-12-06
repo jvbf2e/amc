@@ -8,7 +8,7 @@
   },
   "package": {
     "productName": "qucent-amc",
-    "version": "0.1.41"
+    "version": "0.1.51"
   },
   "tauri": {
     "allowlist": {
@@ -51,7 +51,7 @@
       }
     },
     "security": {
-      "csp": "script-src 'unsafe-eval' 'self'; default-src blob: data: filesystem: ws: wss: http: https: tauri: 'unsafe-eval' 'unsafe-inline' 'self'; img-src data: 'self';"
+      "csp": null
     },
     "systemTray": {
       "iconPath": "icons/icon.png",

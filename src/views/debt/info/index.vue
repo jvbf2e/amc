@@ -69,7 +69,7 @@
 
 <script setup lang="ts">
 import { onMounted, reactive, ref } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { useRoute } from 'vue-router'
 import { getDebtPackageList, readDebt } from '@/api/modules'
 import { getDict } from '@/utils'
 import { AppStore, DebtStore } from '@/store'
@@ -93,12 +93,10 @@ import LawsuitsPage from './components/lawsuits/index.vue'
 
 import Config from './config'
 
-const { params } = useRoute()
+const { query } = useRoute()
 
 const appStore = AppStore()
 const debtStore = DebtStore()
-
-const router = useRouter()
 
 const updatePageRef = ref()
 const debtorPageRef = ref()
@@ -110,7 +108,7 @@ const Apis = reactive({
         code,
         data: res,
         msg,
-      } = await readDebt(parseInt(params.asset_debt_id as string))
+      } = await readDebt(parseInt(query.asset_debt_id as string))
       if (code === 0) {
         WebData.baseInfo = res
         debtStore.setInfoDebtType(res.debt_type as number)
@@ -137,7 +135,7 @@ const Apis = reactive({
 })
 
 const WebData = reactive({
-  asset_debt_id: parseInt(params.asset_debt_id as string),
+  asset_debt_id: parseInt(query.asset_debt_id as string),
   isInfo: true,
   packageList: [] as { asset_package_id: number; project_name: string }[],
   info: [] as { label: any; value: any }[],

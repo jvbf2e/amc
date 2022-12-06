@@ -41,9 +41,9 @@
       :data="TableData.data"
       :pagination="false"
     >
-      <template #contract_no="{ record }">
+      <template #debt_no="{ record }">
         <a-link href="javascript:;" @click.stop="TableData.handlePush(record)">
-          {{ record.contract_no }}
+          {{ record.debt_no }}
         </a-link>
       </template>
       <template #operates="{ record }">
@@ -79,14 +79,14 @@
       <template v-if="DrawerData.type === 'create'">
         <CreatePage
           ref="createPageRef"
-          :package-id="parseInt(params.asset_package_id as string)"
+          :package-id="parseInt(query.asset_package_id as string)"
           @submit-success="DrawerData.handleForm"
         />
       </template>
       <template v-if="DrawerData.type === 'update'">
         <UpdatePage
           ref="updatePageRef"
-          :package-id="parseInt(params.asset_package_id as string)"
+          :package-id="parseInt(query.asset_package_id as string)"
           :model="WebData.debtInfo"
           @submit-success="DrawerData.handleForm"
         />
@@ -119,7 +119,7 @@ import type { crudType } from './type'
 import Config from './config'
 
 const router = useRouter()
-const { params } = useRoute()
+const { query } = useRoute()
 
 const createPageRef = ref()
 const updatePageRef = ref()
@@ -136,7 +136,7 @@ const Apis = reactive({
         code,
         data: res,
         msg,
-      } = await readPackage(parseInt(params.asset_package_id as string))
+      } = await readPackage(parseInt(query.asset_package_id as string))
       if (code === 0) {
         WebData.packageInfo = res.assert_package
         WebData.setData(res.assert_package)
@@ -218,13 +218,13 @@ const TableData = reactive({
   handlePush: (row: any) => {
     router.push({
       name: 'DebtInfoDashboard',
-      params: { asset_debt_id: row.asset_debt_id, title: row.debt_no },
+      query: { asset_debt_id: row.asset_debt_id, title: row.debt_no },
     })
   },
   handleDelete: async (row: any) => {
     try {
       await packageStore.apiPackageDebtDelete({
-        asset_package_id: parseInt(params.asset_package_id as string),
+        asset_package_id: parseInt(query.asset_package_id as string),
         asset_debt_ids: [row.asset_debt_id],
       })
       await Apis.getInfo()

@@ -6,22 +6,22 @@ export namespace Debt {
     asset_package_id: string | number
     contract_no: string
     debt_no: string
-    debt_principal_balance: number
-    debt_transfer_price: number
+    debt_principal_balance: undefined | number
+    debt_transfer_price: undefined | number
     debt_type: string | number
     employee_id: number
     enterprise_id: number
     interest_pause_date: string
-    interest_penalty_amount: number
-    iou_amount: number
-    loan_contract_amount: number
+    interest_penalty_amount: undefined | number
+    iou_amount: undefined | number
+    loan_contract_amount: undefined | number
     loan_date: string
-    loan_term_rate: number
+    loan_term_rate: undefined | number
     main_debtor_name: string
     origin_debtor_name: string
     overdue_date: string
-    penalty_interest_rate: number
-    principal_interest_amount: number
+    penalty_interest_rate: undefined | number
+    principal_interest_amount: undefined | number
     project_level: string | number
   }
   export interface ReqUpdateParams extends ReqCreateParams {
@@ -296,10 +296,10 @@ export namespace Debt {
     asset_debt_id: number
     service_name: string
     area_name: string
-    entrust_term: string
-    basic_cost: number
-    partition_rate: number
-    fee_paid: number
+    entrust_term: undefined | number
+    basic_cost: undefined | number
+    partition_rate: undefined | number
+    fee_paid: undefined | number
     node_check: string
     power_rating: string
     renewal_opinion: string

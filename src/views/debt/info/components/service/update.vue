@@ -13,10 +13,17 @@
       />
     </a-form-item>
     <a-form-item field="entrust_term" label="委托期限">
-      <a-input
+      <a-input-number
         v-model="FormData.model.entrust_term"
         placeholder="请输入委托期限"
-      />
+        :precision="2"
+        allow-clear
+        hide-button
+      >
+        <template #suffix>
+          <span>天</span>
+        </template>
+      </a-input-number>
     </a-form-item>
     <a-form-item field="basic_cost" label="基础费用">
       <a-input-number
@@ -60,19 +67,19 @@
     <a-form-item field="node_check" label="节点考核">
       <a-input
         v-model="FormData.model.node_check"
-        placeholder="请输入委托期限"
+        placeholder="请输入节点考核"
       />
     </a-form-item>
     <a-form-item field="power_rating" label="能力评级">
       <a-input
         v-model="FormData.model.power_rating"
-        placeholder="请输入委托期限"
+        placeholder="请输入能力评级"
       />
     </a-form-item>
     <a-form-item field="renewal_opinion" label="续约意见">
       <a-input
         v-model="FormData.model.renewal_opinion"
-        placeholder="请输入委托期限"
+        placeholder="请输入续约意见"
       />
     </a-form-item>
   </a-form>

@@ -47,9 +47,23 @@
       <a-form-item hide-label style="margin-bottom: 0">
         <a-checkbox v-model="WebData.isAgreement">
           我已阅读并同意
-          <a-link href="javascript:;" :hoverable="false">服务协议</a-link>
+          <a-link
+            href="http://amccs.qucent.cn/agreement/terms.html"
+            :hoverable="false"
+            target="_blank"
+            rel="noreferrer"
+          >
+            服务协议
+          </a-link>
           和
-          <a-link href="javascript:;" :hoverable="false">隐私政策</a-link>
+          <a-link
+            href="http://amccs.qucent.cn/agreement/privacy.html"
+            :hoverable="false"
+            target="_blank"
+            rel="noreferrer"
+          >
+            隐私政策
+          </a-link>
         </a-checkbox>
       </a-form-item>
     </a-form>
@@ -139,7 +153,6 @@ const WebData = reactive({
     text: CODE_TEXT,
     second: 60,
     handleCode: async () => {
-      console.log(CODE_TEXT)
       try {
         WebData.code.timer = window.setInterval(() => {
           WebData.code.text = `已发送 ${WebData.code.second--}秒`
@@ -180,7 +193,6 @@ const WebData = reactive({
               WechatData.handleSubmit(data.code)
               break
             default:
-              console.log(message)
               break
           }
         })

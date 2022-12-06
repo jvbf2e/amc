@@ -12,18 +12,14 @@
           <div class="c-card">
             <div class="c-card__title">圈讯不良交易平台</div>
             <div class="c-card-body">
-              <a-link href="javascript:;" :hoverable="false">
-                <IconWechat :size="18" />
-                <span style="font-size: 16px">
-                  点击跳转前往圈讯不良交易平台
-                </span>
+              <a-link
+                href="http://amct.qucent.cn"
+                :hoverable="false"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <a-image :src="AssetTrading" :width="277" :preview="false" />
               </a-link>
-              <a-space :size="24">
-                <p style="color: var(--color-text-3)">
-                  圈讯为用户提供移动管理工具，帮助使用者在手机上快捷访问AMC交易平台
-                </p>
-                <IconFont type="icon-chui" :size="80" />
-              </a-space>
             </div>
           </div>
           <CNotice />
@@ -34,7 +30,7 @@
 </template>
 
 <script setup lang="ts">
-import { IconWechat } from '@arco-design/web-vue/es/icon'
+import AssetTrading from '@/assets/image/asset_trading.jpg'
 
 import CDynamic from './components/dynamic.vue'
 import CEmployee from './components/employee.vue'
@@ -78,7 +74,7 @@ import CStatistics from './components/statistics.vue'
 .c-card {
   position: relative;
   width: 100%;
-  background-color: #fff;
+  background-color: var(--color-bg-1);
   border-radius: 4px;
   overflow: hidden;
 
@@ -88,15 +84,15 @@ import CStatistics from './components/statistics.vue'
 
   &__title {
     position: relative;
-    padding: 12px 24px;
-    color: #333;
+    padding: 24px 24px 0;
+    color: rgb(var(--gray-10));
     font-size: 14px;
     font-weight: bold;
   }
 
   &-body {
     position: relative;
-    padding: 12px 24px;
+    padding: 24px;
   }
 
   &.no-padding &-body {

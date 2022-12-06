@@ -32,7 +32,7 @@ const props = defineProps({
 const route = useRoute()
 const router = useRouter()
 
-const titleComp = computed(() => route.params.title)
+const titleComp = computed(() => route.query.title)
 
 const WebData = reactive({
   handlePush: () => {

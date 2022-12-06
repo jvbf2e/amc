@@ -121,7 +121,7 @@ const TableData = reactive({
   handlePush: (id: number, title: string) => {
     router.push({
       name: 'PackageInfoDashboard',
-      params: { asset_package_id: id, title },
+      query: { asset_package_id: id, title },
     })
   },
   handleDelete: async (row: Debt.ResListItemData) => {
@@ -135,7 +135,7 @@ const TableData = reactive({
   handleRead: (row: any) => {
     router.push({
       name: 'DebtInfoDashboard',
-      params: { asset_debt_id: row.asset_debt_id, title: row.debt_no },
+      query: { asset_debt_id: row.asset_debt_id, title: row.debt_no },
     })
   },
 })
@@ -172,13 +172,13 @@ onMounted(async () => {
 
   &-search {
     position: relative;
-    background-color: #fff;
+    background-color: var(--color-bg-1);
   }
 
   &-table {
     position: relative;
     margin-top: 24px;
-    background-color: #fff;
+    background-color: var(--color-bg-1);
 
     :deep(&.el-table th.el-table__cell) {
       background-color: #fafafa;

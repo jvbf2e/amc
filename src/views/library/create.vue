@@ -42,15 +42,15 @@ const libraryStore = LibraryStore()
 const FormData = reactive({
   ...Config.form,
   handleSubmit: async () => {
-    if (route.params.asset_package_id) {
+    if (route.query.asset_package_id) {
       FormData.model.asset_package_id = parseInt(
-        route.params.asset_package_id as string
+        route.query.asset_package_id as string
       )
       FormData.model.source_type = 2
     }
-    if (route.params.asset_debt_id) {
+    if (route.query.asset_debt_id) {
       FormData.model.asset_debt_id = parseInt(
-        route.params.asset_debt_id as string
+        route.query.asset_debt_id as string
       )
       FormData.model.source_type = 3
     }

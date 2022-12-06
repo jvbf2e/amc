@@ -1,4 +1,4 @@
-import type { App, Debt, Enterprise, Home, Library } from '@/api/interface'
+import type { App, Debt, Enterprise, Home } from '@/api/interface'
 import type { TreeNodeData } from '@arco-design/web-vue'
 
 /* PaginationState */
@@ -13,6 +13,15 @@ export interface ThemeConfigProp {
   isDark: boolean
 }
 
+export interface QucentConfig {
+  ask_before_download: boolean
+  enable_auto_launch: boolean
+  enable_auto_update: boolean
+  file_save_location: null | string
+  language: string
+  theme_mode: string
+}
+
 /* GlobalState */
 export interface GlobalState {
   token: string
@@ -22,6 +31,9 @@ export interface GlobalState {
   themeConfig: ThemeConfigProp
   sign: boolean
   autoStart: number
+  themeColor: string
+  config: QucentConfig
+  theme_system: boolean
 }
 
 /* TabsState */

@@ -1,4 +1,4 @@
-use super::tray::Tray;
+// use super::tray::Tray;
 use crate::log_err;
 use anyhow::{bail, Result};
 use once_cell::sync::OnceCell;
@@ -31,28 +31,47 @@ impl Handle {
       .map_or(None, |a| a.get_window("main"))
   }
 
-  pub fn refresh_qucent() {
+  pub fn refresh_clash() {
     if let Some(window) = Self::global().get_window() {
-      log_err!(window.emit("amc://refresh-qucent-config", "yes"));
+      log_err!(window.emit("verge://refresh-clash-config", "yes"));
     }
   }
 
-  pub fn refresh_amc() {
+  pub fn refresh_verge() {
     if let Some(window) = Self::global().get_window() {
-      log_err!(window.emit("amc://refresh-amc-config", "yes"));
+      log_err!(window.emit("verge://refresh-verge-config", "yes"));
     }
   }
 
   #[allow(unused)]
   pub fn refresh_profiles() {
     if let Some(window) = Self::global().get_window() {
-      log_err!(window.emit("amc://refresh-profiles-config", "yes"));
+      log_err!(window.emit("verge://refresh-profiles-config", "yes"));
     }
   }
 
   pub fn notice_message<S: Into<String>, M: Into<String>>(status: S, msg: M) {
     if let Some(window) = Self::global().get_window() {
-      log_err!(window.emit("amc://notice-message", (status.into(), msg.into())));
+      log_err!(window.emit("verge://notice-message", (status.into(), msg.into())));
     }
+  }
+
+  pub fn update_systray() -> Result<()> {
+    let app_handle = Self::global().app_handle.lock();
+    if app_handle.is_none() {
+      bail!("update_systray unhandled error");
+    }
+    // Tray::update_systray(app_handle.as_ref().unwrap())?;
+    Ok(())
+  }
+
+  /// update the system tray state
+  pub fn update_systray_part() -> Result<()> {
+    let app_handle = Self::global().app_handle.lock();
+    if app_handle.is_none() {
+      bail!("update_systray unhandled error");
+    }
+    // Tray::update_part(app_handle.as_ref().unwrap())?;
+    Ok(())
   }
 }

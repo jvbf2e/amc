@@ -67,7 +67,7 @@
         <div class="info-nav__divider">
           <a-divider :margin="12" />
         </div>
-        <a
+        <!-- <a
           class="info-nav-item"
           href="https://baidu.com"
           target="_blank"
@@ -75,7 +75,7 @@
         >
           <span>帮助与客服</span>
           <IconShareInternal />
-        </a>
+        </a> -->
         <div class="info-nav-item" @click="WebData.handlePush('Setting')">
           <span>设置</span>
         </div>
@@ -265,7 +265,7 @@ onMounted(async () => {
   position: relative;
   padding: 12px;
   width: 320px;
-  background-color: #fff;
+  background-color: var(--color-bg-1);
   border-radius: 12px;
   border: 1px solid var(--color-neutral-2);
   box-shadow: 0 0 16px rgba(0, 0, 0, 0.1);
@@ -289,13 +289,13 @@ onMounted(async () => {
 
       .name {
         margin: 0;
-        color: #333;
+        color: rgb(var(--gray-10));
         font-size: 16px;
       }
 
       .phone {
         margin: 8px 0 12px;
-        color: #333;
+        color: rgb(var(--gray-10));
         font-size: 14px;
       }
     }
@@ -315,7 +315,7 @@ onMounted(async () => {
       justify-content: space-between;
       align-items: center;
       padding: 12px;
-      color: #333;
+      color: rgb(var(--gray-10));
       font-size: 14px;
       border-radius: 8px;
       text-decoration: none;

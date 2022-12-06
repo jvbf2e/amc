@@ -65,14 +65,14 @@ const WebData = reactive({
         // 跳转资产包详情
         router.push({
           name: 'PackageInfoDashboard',
-          params: { asset_package_id: row.object_id, title: row.object_title },
+          query: { asset_package_id: row.object_id, title: row.object_title },
         })
         break
       case 2:
         // 跳转债权详情
         router.push({
           name: 'DebtInfoDashboard',
-          params: { asset_debt_id: row.object_id, title: row.object_title },
+          query: { asset_debt_id: row.object_id, title: row.object_title },
         })
         break
       default:
@@ -115,7 +115,7 @@ onMounted(async () => {
 .c-card {
   position: relative;
   width: 100%;
-  background-color: #fff;
+  background-color: var(--color-bg-1);
   border-radius: 4px;
   overflow: hidden;
 
@@ -125,8 +125,8 @@ onMounted(async () => {
 
   &__title {
     position: relative;
-    padding: 12px 24px;
-    color: #333;
+    padding: 24px 24px 0;
+    color: rgb(var(--gray-10));
     font-size: 14px;
     font-weight: bold;
   }
@@ -135,16 +135,11 @@ onMounted(async () => {
     position: relative;
     padding: 24px;
   }
-
-  &.no-padding &-body {
-    padding: 0;
-  }
 }
 
 .tabs {
   position: relative;
-  margin-top: -6px;
-  padding: 0 24px 24px;
+  margin-top: -12px;
 
   &-list {
     position: relative;
@@ -155,6 +150,7 @@ onMounted(async () => {
       flex-direction: row;
       justify-content: space-between;
       padding: 4px 0;
+      color: rgb(var(--gray-10));
       cursor: pointer;
 
       & + & {
@@ -162,11 +158,11 @@ onMounted(async () => {
       }
 
       .title {
-        color: #666;
+        color: rgb(var(--gray-10));
       }
 
       &:hover {
-        color: #999;
+        color: rgb(var(--gray-10));
       }
     }
   }

@@ -167,7 +167,7 @@ import {
 import CreatePage from './create.vue'
 import UpdatePage from './update.vue'
 
-import type { RouteParams } from 'vue-router'
+import type { LocationQuery } from 'vue-router'
 import type { Library } from '@/api/interface'
 import type { CrudType } from './type'
 
@@ -229,21 +229,20 @@ const WebData = reactive({
     current: string
     forward: null | string
   },
-  setParams: (params: RouteParams) => {
-    if (params.asset_package_id) {
+  setParams: (query: LocationQuery) => {
+    if (query.asset_package_id) {
       WebData.params.asset_package_id = parseInt(
-        params.asset_package_id as string
+        query.asset_package_id as string
       )
       WebData.params.asset_debt_id = 0
       WebData.params.source_type = 2
     }
-    if (params.asset_debt_id) {
-      console.log(params)
+    if (query.asset_debt_id) {
       WebData.params.asset_package_id = 0
-      WebData.params.asset_debt_id = parseInt(params.asset_debt_id as string)
+      WebData.params.asset_debt_id = parseInt(query.asset_debt_id as string)
       WebData.params.source_type = 3
     }
-    if (Object.keys(params).length === 0) {
+    if (Object.keys(query).length === 0) {
       WebData.params.asset_package_id = 0
       WebData.params.asset_debt_id = 0
       WebData.params.source_type = 1
@@ -254,25 +253,13 @@ const WebData = reactive({
       const { file } = await uploadOpen({
         multiple: false,
       })
-
       if (isSize(file.size, 20, 'MegaByte')) {
         throw '上传文件最大为20MB'
       }
       const params = {
         file,
-        source_type: 1,
-        group_id: WebData.params.group_id,
+        ...WebData.params,
       } as Library.ReqFileCreateParams
-      if (route.params.asset_package_id) {
-        params.asset_package_id = parseInt(
-          route.params.asset_package_id as string
-        )
-        params.source_type = 2
-      }
-      if (route.params.asset_debt_id) {
-        params.asset_debt_id = parseInt(route.params.asset_debt_id as string)
-        params.source_type = 3
-      }
       await libraryStore.apiLibraryFileUpload(params)
       await Apis.getList()
     } catch (error) {
@@ -282,7 +269,6 @@ const WebData = reactive({
   handleDownload: async () => {
     try {
       const row = ListData.select as any
-      console.log(row)
       const dir = await open({ directory: true })
       if (!dir) {
         return
@@ -399,8 +385,8 @@ const DrawerData = reactive({
 
 watchEffect(async () => {
   WebData.history = window.history.state
-  const { query, params } = route
-  WebData.setParams(params)
+  const { query } = route
+  WebData.setParams(query)
   WebData.params.group_id = query.group_id
     ? parseInt(query.group_id as string)
     : 0
@@ -485,7 +471,7 @@ watchEffect(async () => {
         position: absolute;
         top: 6px;
         left: 8px;
-        color: #fff;
+        color: var(--color-white);
         font-size: 16px;
       }
 

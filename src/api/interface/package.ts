@@ -16,19 +16,19 @@ export namespace Package {
     project_type: string | number
     area_name: string
     debt_count: string
-    debt_amount: number
-    debt_capital: number
-    debt_interest: number
+    debt_amount: undefined | number
+    debt_capital: undefined | number
+    debt_interest: undefined | number
     deal_platform: string
     deal_opponent: string
     project_leader: string | number
     project_member: number[]
     invest_date: string
-    invest_amount: number
+    invest_amount: undefined | number
     disposal_cycle: string
-    collection_target: number
-    collection_total: number
-    profit_target: number
+    collection_target: undefined | number
+    collection_total: undefined | number
+    profit_target: undefined | number
     project_desc: string
   }
   export interface ReqDeletePackageDebtParams {

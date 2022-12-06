@@ -134,7 +134,7 @@ const TableData = reactive({
   handlePush: (id: number, title: string) => {
     router.push({
       name: 'PackageInfoDashboard',
-      params: { asset_package_id: id, title },
+      query: { asset_package_id: id, title },
     })
   },
   handleDelete: async (id: number) => {
@@ -179,13 +179,13 @@ onMounted(async () => {
 
   &-search {
     position: relative;
-    background-color: #fff;
+    background-color: var(--color-bg-1);
   }
 
   &-table {
     position: relative;
     margin-top: 24px;
-    background-color: #fff;
+    background-color: var(--color-bg-1);
 
     :deep(&.el-table th.el-table__cell) {
       background-color: #fafafa;

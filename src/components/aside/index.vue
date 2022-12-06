@@ -42,9 +42,9 @@ const router = useRouter()
 const Data = reactive({
   active: '',
   router: (path: string) => {
-    const { params } = route
+    const { query } = route
     Data.active = path
-    router.push({ name: path, params })
+    router.push({ name: path, query })
   },
 })
 

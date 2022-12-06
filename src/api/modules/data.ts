@@ -53,3 +53,20 @@ export const readDataBusiness = (data: Data.ReqReadBusinessParams) => {
     },
   })
 }
+
+/**
+ * 房价评估
+ * @param data
+ * @returns
+ */
+export const createDataHouse = (data: Data.ReqCreateHouseParams) => {
+  const stamp = getStamp(`${data.asset_debt_id}${data.asset_debt_house_id}`)
+  return http({
+    url: '/web/assetDebt/createAssetDebtQueryLogPgfj',
+    method: 'post',
+    data: {
+      ...data,
+      ...stamp,
+    },
+  })
+}

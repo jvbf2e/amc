@@ -1,33 +1,35 @@
 <template>
   <div class="c-card">
     <div class="c-card__title">最新动态</div>
-    <a-table
-      :columns="TableData.columns"
-      :data="homeStore.dynamic"
-      :pagination="false"
-    >
-      <template #project_name="{ record }">
-        <a-link
-          href="javascript:;"
-          :hoverable="false"
-          @click="WebData.handlePush(record)"
-        >
-          {{ record.project_name }}
-        </a-link>
-      </template>
-      <template #project_level="{ record }">
-        <a-tag
-          :color="
-            record.project_level === '低'
-              ? 'green'
-              : record.project_level === '中'
-              ? 'orange'
-              : 'magenta'
-          "
-          >{{ record.project_level }}</a-tag
-        >
-      </template>
-    </a-table>
+    <div class="c-card__body">
+      <a-table
+        :columns="TableData.columns"
+        :data="homeStore.dynamic"
+        :pagination="false"
+      >
+        <template #project_name="{ record }">
+          <a-link
+            href="javascript:;"
+            :hoverable="false"
+            @click="WebData.handlePush(record)"
+          >
+            {{ record.project_name }}
+          </a-link>
+        </template>
+        <template #project_level="{ record }">
+          <a-tag
+            :color="
+              record.project_level === '低'
+                ? 'green'
+                : record.project_level === '中'
+                ? 'orange'
+                : 'magenta'
+            "
+            >{{ record.project_level }}</a-tag
+          >
+        </template>
+      </a-table>
+    </div>
   </div>
 </template>
 
@@ -47,7 +49,7 @@ const WebData = reactive({
   handlePush: (row: any) => {
     router.push({
       name: 'PackageInfoDashboard',
-      params: {
+      query: {
         asset_package_id: row.asset_package_id,
         title: row.project_name,
       },
@@ -74,7 +76,7 @@ onMounted(() => {
 .c-card {
   position: relative;
   width: 100%;
-  background-color: #fff;
+  background-color: var(--color-bg-1);
   border-radius: 4px;
   overflow: hidden;
 
@@ -84,15 +86,15 @@ onMounted(() => {
 
   &__title {
     position: relative;
-    padding: 12px 24px;
-    color: #333;
+    padding: 24px;
+    color: rgb(var(--gray-10));
     font-size: 14px;
     font-weight: bold;
   }
 
-  &-body {
+  &__body {
     position: relative;
-    padding: 24px;
+    padding: 0;
   }
 
   &.no-padding &-body {

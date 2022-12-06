@@ -146,9 +146,7 @@ const treeContext = reactive({
   onCheck,
 })
 
-onMounted(() => {
-  console.log(visibleNodeList)
-})
+onMounted(() => {})
 
 provide(TreeInjectionKey, treeContext)
 </script>

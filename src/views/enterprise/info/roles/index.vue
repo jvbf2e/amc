@@ -116,6 +116,7 @@ const TableData = reactive({
   handleDelete: async (record: any) => {
     try {
       await roleStore.apiRoleDelete(record.id)
+      await roleStore.apiRoleGetAll()
       await roleStore.apiRoleGetList()
     } catch (error) {
       appStore.setMessage({ content: error as string, type: 'danger' })
@@ -166,6 +167,7 @@ const DrawerData = reactive({
     DrawerData.visible = false
   },
   handleForm: async () => {
+    await roleStore.apiRoleGetAll()
     await roleStore.apiRoleGetList()
     DrawerData.handleCancel()
   },

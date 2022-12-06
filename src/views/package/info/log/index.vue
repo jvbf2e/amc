@@ -50,16 +50,16 @@
       <template v-if="DrawerData.type === 'create'">
         <CreatePage
           ref="createPageRef"
-          :package-id="parseInt(params.asset_package_id as string)"
-          :package-name="(params.title as string)"
+          :package-id="parseInt(query.asset_package_id as string)"
+          :package-name="(query.title as string)"
           @submit-success="DrawerData.handleForm"
         />
       </template>
       <template v-else-if="DrawerData.type === 'update'">
         <UpdatePage
           ref="updatePageRef"
-          :package-id="parseInt(params.asset_package_id as string)"
-          :package-name="(params.title as string)"
+          :package-id="parseInt(query.asset_package_id as string)"
+          :package-name="(query.title as string)"
           :model="WebData.info"
           @submit-success="DrawerData.handleForm"
         />
@@ -83,7 +83,7 @@ import UpdatePage from './components/update.vue'
 
 import Config from './config'
 
-const { params } = useRoute()
+const { query } = useRoute()
 
 const createPageRef = ref()
 const updatePageRef = ref()
@@ -134,7 +134,7 @@ const TableData = reactive({
         asset_package_id: row.asset_package_id,
         log_ids: [row.log_id],
       })
-      await Apis.getList(parseInt(params.asset_package_id as string))
+      await Apis.getList(parseInt(query.asset_package_id as string))
     } catch (error) {
       appStore.setMessage({ content: error as string, type: 'danger' })
     }
@@ -186,14 +186,14 @@ const DrawerData = reactive({
   },
   handleForm: async () => {
     await packageStore.apiPackageLogGetList({
-      asset_package_id: parseInt(params.asset_package_id as string),
+      asset_package_id: parseInt(query.asset_package_id as string),
     })
     DrawerData.handleCancel()
   },
 })
 
 onMounted(async () => {
-  await Apis.getList(parseInt(params.asset_package_id as string))
+  await Apis.getList(parseInt(query.asset_package_id as string))
 })
 </script>
 

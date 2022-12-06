@@ -1,17 +1,13 @@
 use crate::{
   config::*,
-  // core::*,
   feat,
-  utils::{dirs, help},
 };
-use crate::{ret_err, wrap_err};
+use crate::{wrap_err};
 use futures_util::StreamExt;
 use std::fs::File;
 use std::io::Write;
 use std::path::Path;
 use anyhow::Result;
-use serde_yaml::Mapping;
-use tauri::{api, State};
 
 type CmdResult<T = ()> = Result<T, String>;
 
@@ -74,10 +70,20 @@ pub async fn download_video(
 
 #[tauri::command]
 pub fn get_amc_config() -> CmdResult<IAmc> {
-    Ok(Config::amc().data().clone())
+  Ok(Config::amc().data().clone())
 }
 
 #[tauri::command]
 pub async fn patch_amc_config(payload: IAmc) -> CmdResult {
-    wrap_err!(feat::patch_amc(payload).await)
+  wrap_err!(feat::patch_amc(payload).await)
+}
+
+#[tauri::command]
+pub fn get_qucent_config() -> CmdResult<IQucent> {
+  Ok(Config::qucent().data().clone())
+}
+
+#[tauri::command]
+pub async fn patch_qucent_config(payload: IQucent) -> CmdResult {
+  wrap_err!(feat::patch_qucent(payload).await)
 }

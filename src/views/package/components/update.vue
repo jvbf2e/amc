@@ -71,7 +71,7 @@
         <a-form-item field="project_type" label="项目类型">
           <a-select
             v-model="FormData.model.project_type"
-            placeholder="请选择项目阶段"
+            placeholder="请选择项目类型"
           >
             <template
               v-for="item in appStore.dicts.filter((item: any) => item.key === 'project_type')[0].children"
@@ -103,47 +103,70 @@
       </a-col>
       <a-col :span="12">
         <a-form-item field="debt_amount" label="债权总数">
-          <a-input-number
-            v-model="FormData.model.debt_amount"
-            placeholder="请输入债权总数"
-            :precision="2"
-            allow-clear
-            hide-button
+          <a-tooltip
+            :content="simplifyNum(FormData.model.debt_amount)"
+            position="tl"
+            mini
           >
-            <template #suffix>
-              <span>元</span>
-            </template>
-          </a-input-number>
+            <a-input-number
+              v-model="FormData.model.debt_amount"
+              placeholder="请输入债权总数"
+              :precision="2"
+              allow-clear
+              hide-button
+              :max="10000000000000"
+              model-event="input"
+            >
+              <template #suffix>
+                <span>元</span>
+              </template>
+            </a-input-number>
+          </a-tooltip>
         </a-form-item>
       </a-col>
       <a-col :span="12">
         <a-form-item field="debt_capital" label="债权本金">
-          <a-input-number
-            v-model="FormData.model.debt_capital"
-            placeholder="请输入债权本金"
-            :precision="2"
-            allow-clear
-            hide-button
+          <a-tooltip
+            :content="simplifyNum(FormData.model.debt_capital)"
+            position="tl"
+            mini
           >
-            <template #suffix>
-              <span>元</span>
-            </template>
-          </a-input-number>
+            <a-input-number
+              v-model="FormData.model.debt_capital"
+              placeholder="请输入债权本金"
+              :precision="2"
+              allow-clear
+              hide-button
+              :max="10000000000000"
+              model-event="input"
+            >
+              <template #suffix>
+                <span>元</span>
+              </template>
+            </a-input-number>
+          </a-tooltip>
         </a-form-item>
       </a-col>
       <a-col :span="12">
         <a-form-item field="debt_interest" label="债权利息">
-          <a-input-number
-            v-model="FormData.model.debt_interest"
-            placeholder="请输入债权利息"
-            :precision="2"
-            allow-clear
-            hide-button
+          <a-tooltip
+            :content="simplifyNum(FormData.model.debt_interest)"
+            position="tl"
           >
-            <template #suffix>
-              <span>元</span>
-            </template>
-          </a-input-number>
+            <a-input-number
+              v-model="FormData.model.debt_interest"
+              placeholder="请输入债权利息"
+              :precision="2"
+              allow-clear
+              hide-button
+              :max="10000000000000"
+              model-event="input"
+            >
+              <template #suffix>
+                <span>元</span>
+              </template>
+            </a-input-number>
+          </a-tooltip>
         </a-form-item>
       </a-col>
       <a-col :span="12">
@@ -166,7 +189,7 @@
         <a-form-item field="project_leader" label="项目负责人">
           <a-select
             v-model="FormData.model.project_leader"
-            placeholder="请选择项目阶段"
+            placeholder="请选择项目负责人"
           >
             <template v-for="item in userStore.table.data">
               <a-option :value="item.id" :label="item.name" />
@@ -204,17 +227,26 @@
       </a-col>
       <a-col :span="12">
         <a-form-item field="invest_amount" label="投资总额">
-          <a-input-number
-            v-model="FormData.model.invest_amount"
-            placeholder="请输入投资总额"
-            :precision="2"
-            allow-clear
-            hide-button
+          <a-tooltip
+            :content="simplifyNum(FormData.model.invest_amount)"
+            position="tl"
+            mini
           >
-            <template #suffix>
-              <span>元</span>
-            </template>
-          </a-input-number>
+            <a-input-number
+              v-model="FormData.model.invest_amount"
+              placeholder="请输入投资总额"
+              :precision="2"
+              allow-clear
+              hide-button
+              :max="10000000000000"
+              model-event="input"
+              @change="WebData.handleChange"
+            >
+              <template #suffix>
+                <span>元</span>
+              </template>
+            </a-input-number>
+          </a-tooltip>
         </a-form-item>
       </a-col>
       <a-col :span="12">
@@ -222,52 +254,74 @@
           <a-input
             v-model="FormData.model.disposal_cycle"
             placeholder="请输入处置周期"
-          />
+          >
+            <template #suffix>
+              <span>天</span>
+            </template>
+          </a-input>
         </a-form-item>
       </a-col>
       <a-col :span="12">
         <a-form-item field="collection_target" label="回款目标">
-          <a-input-number
-            v-model="FormData.model.collection_target"
-            placeholder="请输入回款目标"
-            :precision="2"
-            allow-clear
-            hide-button
+          <a-tooltip
+            :content="simplifyNum(FormData.model.collection_target)"
+            position="tl"
+            mini
           >
-            <template #suffix>
-              <span>元</span>
-            </template>
-          </a-input-number>
+            <a-input-number
+              v-model="FormData.model.collection_target"
+              placeholder="请输入回款目标"
+              :precision="2"
+              allow-clear
+              hide-button
+              :max="10000000000000"
+              model-event="input"
+            >
+              <template #suffix>
+                <span>元</span>
+              </template>
+            </a-input-number>
+          </a-tooltip>
         </a-form-item>
       </a-col>
       <a-col :span="12">
         <a-form-item field="collection_total" label="回款累计">
-          <a-input-number
-            v-model="FormData.model.collection_total"
-            placeholder="请输入回款累计"
-            :precision="2"
-            allow-clear
-            hide-button
+          <a-tooltip
+            :content="simplifyNum(FormData.model.collection_total)"
+            position="tl"
+            mini
           >
-            <template #suffix>
-              <span>元</span>
-            </template>
-          </a-input-number>
+            <a-input-number
+              v-model="FormData.model.collection_total"
+              placeholder="请输入回款累计"
+              :precision="2"
+              allow-clear
+              hide-button
+              :max="10000000000000"
+              model-event="input"
+            >
+              <template #suffix>
+                <span>元</span>
+              </template>
+            </a-input-number>
+          </a-tooltip>
         </a-form-item>
       </a-col>
       <a-col :span="12">
-        <a-form-item field="profit_target" label="利润目标">
-          <a-input-number
-            v-model="FormData.model.profit_target"
-            placeholder="请输入利润目标"
-            :precision="2"
-            allow-clear
-            hide-button
+        <a-form-item field="profit_target" label="利润目标(元)">
+          <a-tooltip
+            :content="simplifyNum(FormData.model.profit_target)"
+            position="tl"
+            mini
           >
-            <template #suffix>
-              <span>元</span>
-            </template>
-          </a-input-number>
+            <a-input-number
+              v-model="FormData.model.profit_target"
+              placeholder="利润目标 = 投资总额 - 回款目标"
+              :precision="2"
+              read-only
+            >
+            </a-input-number>
+          </a-tooltip>
         </a-form-item>
       </a-col>
       <a-col :span="24">
@@ -290,6 +344,7 @@
 import { onMounted, reactive, ref } from 'vue'
 import lodash from 'lodash'
 import { AppStore, UserStore, PackageStore } from '@/store'
+import { simplifyNum } from '@/utils'
 
 import type { PropType } from 'vue'
 import type { Package } from '@/api/interface'
@@ -307,6 +362,16 @@ const userStore = UserStore()
 const packageStore = PackageStore()
 
 const formRef = ref()
+
+const WebData = reactive({
+  handleChange: (value: any) => {
+    FormData.model.profit_target =
+      value - (FormData.model.collection_target ?? 0)
+  },
+  handleChange2: (value: any) => {
+    FormData.model.profit_target = (FormData.model.invest_amount ?? 0) - value
+  },
+})
 
 const FormData = reactive({
   model: lodash.cloneDeep(props.model as Package.ReqUpdateParams),

@@ -53,7 +53,7 @@ import Loading from '@/components/loading/index.vue'
   &-body {
     width: calc(var(--vw) - 64px);
     height: calc(var(--vh) - 44px);
-    background-color: #fff;
+    background-color: var(--color-bg-1);
     border-radius: 12px 0 0 0;
     overflow: hidden;
     transform: translate(64px, 44px);

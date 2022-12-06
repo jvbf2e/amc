@@ -4,16 +4,13 @@
     <div class="c-card-body">
       <div class="list" v-if="homeStore.notice.length > 0">
         <template v-for="item in homeStore.notice">
-          <div
-            class="list-item arco-auto-tooltip"
-            @click="ModalData.handleVisible(item)"
-          >
-            <a-space :size="12">
-              <template v-if="item.status_view === 1">
+          <div class="list-item" @click="ModalData.handleVisible(item)">
+            <template v-if="item.status_view === 1">
+              <div class="badge">
                 <a-badge dot :count="1" />
-              </template>
-              <span>{{ item.title }}</span>
-            </a-space>
+              </div>
+            </template>
+            <div class="title arco-auto-tooltip">{{ item.title }}</div>
           </div>
         </template>
       </div>
@@ -107,6 +104,7 @@ const ModalData = reactive({
   } as Home.ResReadHomeNotice,
   handleVisible: async (row: any) => {
     await Apis.read(row.record_id)
+    await homeStore.apiHomeNoticeList()
     ModalData.visible = true
   },
   handleCancel: () => {
@@ -152,7 +150,7 @@ onMounted(() => {
 .c-card {
   position: relative;
   width: 100%;
-  background-color: #fff;
+  background-color: var(--color-bg-1);
   border-radius: 4px;
   overflow: hidden;
 
@@ -162,28 +160,44 @@ onMounted(() => {
 
   &__title {
     position: relative;
-    padding: 12px 24px;
-    color: #333;
+    padding: 24px;
+    color: rgb(var(--gray-10));
     font-size: 14px;
     font-weight: bold;
   }
 
   &-body {
     position: relative;
-    padding: 12px 24px 24px;
-  }
-
-  &.no-padding &-body {
-    padding: 0;
+    padding: 0 24px 24px;
   }
 }
 
 .list {
   &-item {
-    display: block;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
     width: 100%;
+    padding: 6px 0;
+    cursor: pointer;
+
+    &:hover {
+      background-color: rgb(var(--gray-2));
+    }
+
     & + & {
-      margin-top: 12px;
+      margin-top: 6px;
+    }
+
+    & > .badge {
+      flex: 14px 0 0;
+      display: flex;
+      justify-content: end;
+    }
+
+    & > .title {
+      padding-left: 6px;
+      color: rgb(var(--gray-10));
     }
   }
 }

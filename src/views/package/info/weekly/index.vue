@@ -50,16 +50,16 @@
       <template v-if="DrawerData.type === 'create'">
         <CreatePage
           ref="createPageRef"
-          :package-id="parseInt(params.asset_package_id as string)"
-          :package-name="(params.title as string)"
+          :package-id="parseInt(query.asset_package_id as string)"
+          :package-name="(query.title as string)"
           @submit-success="DrawerData.handleForm"
         />
       </template>
       <template v-else-if="DrawerData.type === 'update'">
         <UpdatePage
           ref="updatePageRef"
-          :package-id="parseInt(params.asset_package_id as string)"
-          :package-name="(params.title as string)"
+          :package-id="parseInt(query.asset_package_id as string)"
+          :package-name="(query.title as string)"
           :model="WebData.info"
           @submit-success="DrawerData.handleForm"
         />
@@ -83,7 +83,7 @@ import Config from './config'
 import { readPackageWeekly } from '@/api/modules'
 import { Package } from '@/api/interface'
 
-const { params } = useRoute()
+const { query } = useRoute()
 
 const appStore = AppStore()
 const packageStore = PackageStore()
@@ -127,7 +127,7 @@ const TableData = reactive({
         weekly_ids: [row.weekly_id],
       })
       await packageStore.apiPackageWeeklyGetList({
-        asset_package_id: parseInt(params.asset_package_id as string),
+        asset_package_id: parseInt(query.asset_package_id as string),
       })
     } catch (error) {
       appStore.setMessage({ content: error as string, type: 'danger' })
@@ -181,7 +181,7 @@ const DrawerData = reactive({
   handleForm: async () => {
     try {
       await packageStore.apiPackageWeeklyGetList({
-        asset_package_id: parseInt(params.asset_package_id as string),
+        asset_package_id: parseInt(query.asset_package_id as string),
       })
       DrawerData.handleCancel()
     } catch (error) {
@@ -193,7 +193,7 @@ const DrawerData = reactive({
 onMounted(async () => {
   try {
     await packageStore.apiPackageWeeklyGetList({
-      asset_package_id: parseInt(params.asset_package_id as string),
+      asset_package_id: parseInt(query.asset_package_id as string),
     })
   } catch (error) {
     appStore.setMessage({ content: error as string, type: 'danger' })

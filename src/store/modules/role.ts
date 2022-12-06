@@ -39,6 +39,7 @@ export const RoleStore = defineStore({
     },
   }),
   getters: {
+    getAll: (state) => state.all,
     getList: (state) => state.table.data,
     getPagination: (state) => state.table.pagination,
     getTreeCheckedKeys: (state) => state.tree.checkedKeys,

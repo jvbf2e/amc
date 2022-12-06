@@ -39,9 +39,9 @@
           </template>
         </a-button>
         <a-tooltip
-          :arrow-style="{ backgroundColor: '#ffffff' }"
+          :arrow-style="{ backgroundColor: 'var(--color-white)' }"
           :content-style="{
-            backgroundColor: '#ffffff',
+            backgroundColor: 'var(--color-white)',
             boxShadow: '0 0 6px rgba(0, 0, 0, 0.01)',
           }"
           position="br"
@@ -150,6 +150,7 @@ const WebData = reactive({
       height: 44px;
       background-color: #168cff;
       user-select: none;
+      overflow: hidden;
       cursor: pointer;
 
       &::after {

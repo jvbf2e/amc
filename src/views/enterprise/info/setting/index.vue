@@ -42,16 +42,17 @@ const appStore = AppStore()
 const enterpriseStore = EnterpriseStore()
 
 const WebData = reactive({
-  logo_url: enterpriseStore.info.logo_url.url,
+  logo_url: '',
   file: null as File | null,
   form: {
     model: {
-      logo_url: enterpriseStore.info.logo_url.uri,
-      name: enterpriseStore.info.enterprise_name,
+      logo_url: '',
+      name: '',
     },
     handleSubmit: async () => {
       try {
         await enterpriseStore.apiEnterpriseEdit(WebData.form.model)
+        appStore.setMessage({ content: '更新成功', type: 'success' })
       } catch (error) {
         appStore.setMessage({ content: error as string, type: 'danger' })
       }
@@ -94,7 +95,12 @@ function getFileName(path: string) {
   return rows[rows.length - 1]
 }
 
-onMounted(() => {})
+onMounted(() => {
+  const { logo_url, enterprise_name } = enterpriseStore.getInfo
+  WebData.logo_url = logo_url.url
+  WebData.form.model.logo_url = logo_url.uri
+  WebData.form.model.name = enterprise_name
+})
 </script>
 
 <style lang="less" scoped>

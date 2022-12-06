@@ -2,9 +2,14 @@
   <div class="c-card">
     <div class="c-card-body">
       <div class="user-info">
-        <div class="user-info__avatar">
-          <img :src="homeStore.employee.url" alt="头像" />
-        </div>
+        <a-avatar class="user-info__avatar" :size="60">
+          <template v-if="homeStore.employee.url === ''">
+            {{ homeStore.employee.name.slice(0, 1) }}
+          </template>
+          <template v-else>
+            <img :src="homeStore.employee.url" :alt="homeStore.employee.name" />
+          </template>
+        </a-avatar>
         <div class="user-info__msg">
           <span>{{ homeStore.employee.name }}</span>
           <span>{{ `账号：${homeStore.employee.phone}` }}</span>
@@ -46,7 +51,7 @@ onMounted(async () => {
 .c-card {
   position: relative;
   width: 100%;
-  background-color: #fff;
+  background-color: var(--color-bg-1);
   border-radius: 4px;
   overflow: hidden;
 
@@ -57,7 +62,7 @@ onMounted(async () => {
   &__title {
     position: relative;
     padding: 12px 24px;
-    color: #333;
+    color: rgb(var(--gray-10));
     font-size: 14px;
     font-weight: bold;
   }
@@ -77,18 +82,11 @@ onMounted(async () => {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  color: rgb(var(--gray-10));
 
   &__avatar {
     position: relative;
-
-    & > img {
-      display: block;
-      width: 60px;
-      height: 60px;
-      border-radius: 60px;
-      overflow: hidden;
-      background-color: #f3f3f3;
-    }
+    overflow: hidden;
   }
 
   &__msg {
@@ -114,6 +112,7 @@ onMounted(async () => {
 
   &__title {
     position: relative;
+    color: rgb(var(--gray-10));
     font-size: 14px;
     font-weight: bold;
   }
@@ -135,14 +134,14 @@ onMounted(async () => {
 
       & > .title {
         position: relative;
-        color: #666;
+        color: rgb(var(--gray-10));
         font-size: 12px;
       }
 
       & > .count {
         position: relative;
         margin-top: 12px;
-        color: #333;
+        color: rgb(var(--gray-10));
         font-size: 16px;
         font-weight: bold;
       }

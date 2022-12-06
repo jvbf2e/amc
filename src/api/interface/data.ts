@@ -40,4 +40,12 @@ export namespace Data {
     asset_debt_id: number
     documents_id: number
   }
+
+  export interface ReqCreateHouseParams {
+    asset_debt_id: number
+    asset_debt_house_id: number
+    floor: number
+    total_floor: number
+    toward: string
+  }
 }

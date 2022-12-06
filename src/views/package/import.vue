@@ -10,15 +10,26 @@
           <div class="content">
             <el-button class="no_drag" type="primary">下载模块</el-button>
             <ul>
-              <ol>* 请在下载的Excel模块内补充数据，再上传下载的模块文件，本系统支持导入Csv或Xlsx格式数据</ol>
-              <ol>* 保存模版时请使用GBK编码，否则可能无法导入</ol>
-              <ol>* 若数据为竖排型排列，勾选数据转置</ol>
-              <ol>* 数据第一行为项目属性名称，系统可以识别以下属性</ol>
+              <ol>
+                *
+                请在下载的Excel模块内补充数据，再上传下载的模块文件，本系统支持导入Csv或Xlsx格式数据
+              </ol>
+              <ol>
+                * 保存模版时请使用GBK编码，否则可能无法导入
+              </ol>
+              <ol>
+                * 若数据为竖排型排列，勾选数据转置
+              </ol>
+              <ol>
+                * 数据第一行为项目属性名称，系统可以识别以下属性
+              </ol>
             </ul>
           </div>
         </div>
         <div class="main">
-          <p class="title">2. 请按照数据模块的格式请上传按照模块创建Excel需要导入的数据</p>
+          <p class="title">
+            2. 请按照数据模块的格式请上传按照模块创建Excel需要导入的数据
+          </p>
           <div class="content">
             <el-button class="no_drag" type="primary">上传文件</el-button>
             <el-button class="no_drag" type="primary">上传文件</el-button>
@@ -34,7 +45,10 @@
         <div>
           <p class="title">1. 下载表格模板</p>
           <p class="title">2. 将数据复制到模板</p>
-          <p class="title">3. 调整数据格式：日期格式如 2022-01-01，百分比请保留百分号，金额保留单位在数字之后将数据复制到模板</p>
+          <p class="title">
+            3. 调整数据格式：日期格式如
+            2022-01-01，百分比请保留百分号，金额保留单位在数字之后将数据复制到模板
+          </p>
           <p class="title">4. 上传文件</p>
           <p class="title">5. 提交</p>
           <p class="title">6. 完成导入</p>
@@ -51,7 +65,7 @@
   padding: 24px;
 
   &-card {
-    background-color: #fff;
+    background-color: var(--color-bg-1);
 
     & + & {
       margin-top: 24px;
