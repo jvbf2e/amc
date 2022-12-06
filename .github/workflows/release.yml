@@ -88,8 +88,8 @@ jobs:
       - uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          TAURI_PRIVATE_KEY: ${{ secrets.TAURI_PRIVATE_KEY }}
-          TAURI_KEY_PASSWORD: ${{ secrets.TAURI_KEY_PASSWORD }}
+          TAURI_PRIVATE_KEY: dW50cnVzdGVkIGNvbW1lbnQ6IHJzaWduIGVuY3J5cHRlZCBzZWNyZXQga2V5ClJXUlRZMEl5cE1GMk5YMHk3ckMwUXJJd05kSXdPVmxGMENaaFRIeFNpTFd0TVlqcGg1QUFBQkFBQUFBQUFBQUFBQUlBQUFBQTFOc3RSQ3loMUJ2OXh3ZGtWSWNoKzZ2UWt3UFB6WW85ZElVOW1vRlpuSHMydUh5dXIvNnoxQ2NSb1ROQkFwY3QxOFoyQ3F4Um5US3ZzeG5WbjNlQjNLditzcXdvZDB4MW0xTmZ0YnZ2bjRhb0JJZDVVRXpDck1DK01ZelRPZ0l4ZXdvbDJFODVVVE09Cg==
+          TAURI_KEY_PASSWORD: qucent2018
         with:
           releaseId: ${{ needs.create-release.outputs.RELEASE_UPLOAD_ID }}
 
